@@ -229,7 +229,7 @@ section { position: relative; }
    HERO
    ========================================================= */
 .hero {
-  padding: 160px 0 80px;
+  padding: 160px 0 120px;
   text-align: center;
   overflow: hidden;
   background:
@@ -295,17 +295,17 @@ section { position: relative; }
   margin-bottom: 18px;
 }
 .hero__subtitle {
-  font-size: 17px;
+  font-size: 16px;
   color: var(--color-ink-soft);
   font-weight: 500;
   max-width: 640px;
-  margin: 0 auto 6px;
+  margin: 0 auto 8px;
 }
 .hero__subtitle--script {
   font-family: var(--font-script);
-  font-size: 24px;
+  font-size: 30px;
   color: var(--color-gold);
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 .hero__cta { margin-top: 12px; }
 
@@ -322,8 +322,8 @@ section { position: relative; }
 
 .hero__products { margin-top: 40px; }
 .hero__pedestal-img {
-  max-width: 820px;
-  width: 100%;
+  max-width: 1080px;
+  width: 90%;
   margin: 0 auto;
   transition: transform var(--transition-base);
   filter: drop-shadow(0 24px 30px rgba(94, 21, 25, 0.16));
@@ -333,7 +333,31 @@ section { position: relative; }
 /* =========================================================
    BỐN BIỂU TƯỢNG — STORIES
    ========================================================= */
-.stories { padding: 90px 0 60px; overflow: hidden; }
+.stories { padding: 110px 0 100px; overflow: hidden; }
+
+/* Dải trang trí dưới tiêu đề section */
+.section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 22px auto 0;
+  width: 220px;
+}
+.section-divider span {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}
+.section-divider::before,
+.section-divider::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  flex-shrink: 0;
+}
 
 .stories__stamp {
   width: 130px;
@@ -361,7 +385,7 @@ section { position: relative; }
   height: calc(100% + 60px);
   z-index: 0;
   pointer-events: none;
-  opacity: 0.9;
+  opacity: 0.18;
 }
 .stories__path-bg img {
   width: 100%;
@@ -435,7 +459,7 @@ section { position: relative; }
    LỘ TRÌNH PHÁT TRIỂN — ROADMAP
    ========================================================= */
 .roadmap {
-  padding: 90px 0;
+  padding: 120px 0;
   background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-cream-dark) 100%);
 }
 .roadmap__inner {
@@ -461,7 +485,7 @@ section { position: relative; }
 /* =========================================================
    BỘ SẢN PHẨM
    ========================================================= */
-.products { padding: 90px 0; }
+.products { padding: 120px 0; }
 .products__showcase {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
@@ -502,7 +526,7 @@ section { position: relative; }
    TRẢI NGHIỆM AR
    ========================================================= */
 .ar-experience {
-  padding: 100px 0;
+  padding: 120px 0;
   background: var(--color-maroon);
   color: var(--color-cream);
   overflow: hidden;
@@ -565,7 +589,7 @@ section { position: relative; }
 /* =========================================================
    ĐẶT HỘP QUÀ
    ========================================================= */
-.order { padding: 100px 0 120px; position: relative; overflow: hidden; }
+.order { padding: 120px 0 140px; position: relative; overflow: hidden; }
 .order > .container { position: relative; z-index: 1; }
 .order__ribbon {
   position: absolute;
@@ -697,16 +721,21 @@ section { position: relative; }
 .footer__contact li { color: rgba(251, 242, 227, 0.7); }
 
 .footer__socials { display: flex; gap: 12px; }
-.footer__socials a {
-  width: 38px; height: 38px;
+.footer__social-link {
+  width: 40px; height: 40px;
   display: flex; align-items: center; justify-content: center;
   border: 1px solid rgba(251, 242, 227, 0.3);
   border-radius: 50%;
-  font-size: 11px;
-  font-weight: 700;
-  transition: background var(--transition-base), transform var(--transition-base);
+  color: var(--color-cream);
+  transition: background var(--transition-base), transform var(--transition-base), color var(--transition-base), border-color var(--transition-base);
 }
-.footer__socials a:hover { background: var(--color-gold); transform: translateY(-3px); }
+.footer__social-link svg { width: 18px; height: 18px; }
+.footer__social-link:hover {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-maroon-dark);
+  transform: translateY(-3px);
+}
 
 .footer__bottom {
   border-top: 1px solid rgba(251, 242, 227, 0.12);
@@ -795,7 +824,7 @@ section { position: relative; }
   }
   .story-item__image { width: 200px; }
   .story-item__content { padding: 24px; max-width: 100%; }
-  .stories__path-bg { opacity: 0.5; }
+  .stories__path-bg { opacity: 0.14; }
 
   .products__grid { grid-template-columns: 1fr 1fr; }
 

@@ -28,18 +28,18 @@
 
     <nav class="nav" id="mainNav">
       <ul class="nav__list">
-        <li><a href="#san-pham" class="nav__link">Bộ sưu tập</a></li>
-        <li><a href="#bon-cau-chuyen" class="nav__link">Bốn câu chuyện</a></li>
-        <li><a href="#trai-nghiem-ar" class="nav__link">Trải nghiệm AR</a></li>
-        <li><a href="#dat-hop-qua" class="nav__link">Đặt hộp quà</a></li>
-        <li><a href="#doanh-nghiep" class="nav__link">Doanh nghiệp</a></li>
+        <li><a href="#san-pham" class="nav__link" data-i18n="nav_collection">Bộ sưu tập</a></li>
+        <li><a href="#bon-cau-chuyen" class="nav__link" data-i18n="nav_stories">Bốn câu chuyện</a></li>
+        <li><a href="#trai-nghiem-ar" class="nav__link" data-i18n="nav_ar">Trải nghiệm AR</a></li>
+        <li><a href="#dat-hop-qua" class="nav__link" data-i18n="nav_order">Đặt hộp quà</a></li>
+        <li><a href="#doanh-nghiep" class="nav__link" data-i18n="nav_business">Doanh nghiệp</a></li>
       </ul>
     </nav>
 
     <div class="header__actions">
       <button class="lang-toggle" id="langToggle" type="button" aria-label="Đổi ngôn ngữ">
-        <span class="lang-toggle__option lang-toggle__option--vn is-active">VN</span>
-        <span class="lang-toggle__option lang-toggle__option--en">EN</span>
+        <span class="lang-toggle__option lang-toggle__option--vn is-active" data-lang="vi">VN</span>
+        <span class="lang-toggle__option lang-toggle__option--en" data-lang="en">EN</span>
       </button>
       <button class="hamburger" id="hamburger" type="button" aria-label="Mở menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -65,10 +65,10 @@
     </div>
     <div class="container hero__inner">
       <div class="hero__heading reveal">
-        <h1 class="hero__title">HÀ NỘI TRONG TÔI</h1>
-        <p class="hero__subtitle">Trải nghiệm Hà Nội nghìn năm theo cách chưa từng có</p>
-        <p class="hero__subtitle hero__subtitle--script">Sự kết hợp hoàn hảo giữa Ẩm thực - Văn hóa - Công nghệ - Trải nghiệm</p>
-        <a href="#san-pham" class="btn btn--primary hero__cta">Khám phá ngay</a>
+        <h1 class="hero__title" data-i18n="hero_title">HÀ NỘI TRONG TÔI</h1>
+        <p class="hero__subtitle" data-i18n="hero_subtitle_1">Trải nghiệm Hà Nội nghìn năm theo cách chưa từng có</p>
+        <p class="hero__subtitle hero__subtitle--script" data-i18n="hero_subtitle_2">Sự kết hợp hoàn hảo giữa Ẩm thực - Văn hóa - Công nghệ - Trải nghiệm</p>
+        <a href="#san-pham" class="btn btn--primary hero__cta" data-i18n="hero_cta">Khám phá ngay</a>
       </div>
 
       <img src="dau-lat-cat-3.png" alt="Lát cắt ký ức - Câu chuyện dân tộc" class="hero__badge reveal">
@@ -84,7 +84,13 @@
   <!-- =============================== -->
   <section class="stories" id="bon-cau-chuyen">
     <div class="container">
-      <h2 class="section-title reveal">Bốn Biểu tượng <span class="section-title__script">Bốn Câu Chuyện</span></h2>
+      <h2 class="section-title reveal">
+        <span data-i18n="stories_title">Bốn Biểu tượng</span>
+        <span class="section-title__script" data-i18n="stories_title_script">Bốn Câu Chuyện</span>
+      </h2>
+
+      <!-- Dải trang trí phân cách trước phần nội dung -->
+      <div class="section-divider reveal" aria-hidden="true"><span></span></div>
 
       <div class="stories__stamp reveal">
         <img src="dau-lat-cat-3.png" alt="Lát cắt ký ức - Câu chuyện dân tộc">
@@ -102,10 +108,10 @@
             <img src="van-mieu-11.png" alt="" class="story-item__coin" aria-hidden="true">
           </div>
           <div class="story-item__content">
-            <h3 class="story-item__title">Văn Miếu - Quốc Tử Giám</h3>
-            <p class="story-item__caption">"Đỗ - Thành Tài"</p>
-            <p class="story-item__desc">Dựng từ 1070 dưới thời Lý Thánh Tông, Văn Miếu là biểu tượng cho truyền thống hiếu học ngàn năm của người Hà Nội. Bánh mang hoa văn mái ngói cong và cửa sổ tròn - lời chúc đỗ đạt, thành tài gửi đến người thân yêu.</p>
-            <a href="#san-pham" class="btn btn--outline">Tìm hiểu thêm</a>
+            <h3 class="story-item__title" data-i18n="story1_title">Văn Miếu - Quốc Tử Giám</h3>
+            <p class="story-item__caption" data-i18n="story1_caption">"Đỗ - Thành Tài"</p>
+            <p class="story-item__desc" data-i18n="story1_desc">Dựng từ 1070 dưới thời Lý Thánh Tông, Văn Miếu là biểu tượng cho truyền thống hiếu học ngàn năm của người Hà Nội. Bánh mang hoa văn mái ngói cong và cửa sổ tròn - lời chúc đỗ đạt, thành tài gửi đến người thân yêu.</p>
+            <a href="#san-pham" class="btn btn--outline" data-i18n="btn_learn_more">Tìm hiểu thêm</a>
           </div>
         </article>
 
@@ -115,10 +121,10 @@
             <img src="thap-rua.png" alt="" class="story-item__coin" aria-hidden="true">
           </div>
           <div class="story-item__content">
-            <h3 class="story-item__title">Tháp Rùa</h3>
-            <p class="story-item__caption">"Bình Yên - Trường Tồn"</p>
-            <p class="story-item__desc">Giữa lòng Hồ Gươm, Tháp Rùa lặng lẽ như nhắc lại khoảnh khắc vua Lê trả gươm - hết binh đao, đất nước trở về thanh bình. Nhân sen thanh khiết trong bánh là lời chúc: một năm an yên, trường tồn cùng năm tháng.</p>
-            <a href="#san-pham" class="btn btn--outline">Tìm hiểu thêm</a>
+            <h3 class="story-item__title" data-i18n="story2_title">Tháp Rùa</h3>
+            <p class="story-item__caption" data-i18n="story2_caption">"Bình Yên - Trường Tồn"</p>
+            <p class="story-item__desc" data-i18n="story2_desc">Giữa lòng Hồ Gươm, Tháp Rùa lặng lẽ như nhắc lại khoảnh khắc vua Lê trả gươm - hết binh đao, đất nước trở về thanh bình. Nhân sen thanh khiết trong bánh là lời chúc: một năm an yên, trường tồn cùng năm tháng.</p>
+            <a href="#san-pham" class="btn btn--outline" data-i18n="btn_learn_more">Tìm hiểu thêm</a>
           </div>
         </article>
 
@@ -128,10 +134,10 @@
             <img src="chua-1-cot.png" alt="" class="story-item__coin" aria-hidden="true">
           </div>
           <div class="story-item__content">
-            <h3 class="story-item__title">Chùa Một Cột</h3>
-            <p class="story-item__caption">"Sinh - Phúc Lành"</p>
-            <p class="story-item__desc">Ngôi chùa mọc lên từ một giấc mơ - vua Lý Thái Tông mơ thấy Quan Âm trao con trên đài sen, và điều lành hiện thực. Nhân đậu đỏ ấm áp là lời chúc: phúc lành gõ cửa nhà bạn.</p>
-            <a href="#san-pham" class="btn btn--outline">Tìm hiểu thêm</a>
+            <h3 class="story-item__title" data-i18n="story3_title">Chùa Một Cột</h3>
+            <p class="story-item__caption" data-i18n="story3_caption">"Sinh - Phúc Lành"</p>
+            <p class="story-item__desc" data-i18n="story3_desc">Ngôi chùa mọc lên từ một giấc mơ - vua Lý Thái Tông mơ thấy Quan Âm trao con trên đài sen, và điều lành hiện thực. Nhân đậu đỏ ấm áp là lời chúc: phúc lành gõ cửa nhà bạn.</p>
+            <a href="#san-pham" class="btn btn--outline" data-i18n="btn_learn_more">Tìm hiểu thêm</a>
           </div>
         </article>
 
@@ -141,10 +147,10 @@
             <img src="cau-long-bien-11.png" alt="" class="story-item__coin" aria-hidden="true">
           </div>
           <div class="story-item__content">
-            <h3 class="story-item__title">Cầu Long Biên</h3>
-            <p class="story-item__caption">"Bền - Gắn Kết"</p>
-            <p class="story-item__desc">Hơn một thế kỷ, cây cầu sắt già chứng kiến những gánh cốm thu đi qua sông Hồng vào phố. Nhân cốm là ký ức của Hà Nội - ăn một miếng, nhớ một thời gắn kết bền lâu.</p>
-            <a href="#san-pham" class="btn btn--outline">Tìm hiểu thêm</a>
+            <h3 class="story-item__title" data-i18n="story4_title">Cầu Long Biên</h3>
+            <p class="story-item__caption" data-i18n="story4_caption">"Bền - Gắn Kết"</p>
+            <p class="story-item__desc" data-i18n="story4_desc">Hơn một thế kỷ, cây cầu sắt già chứng kiến những gánh cốm thu đi qua sông Hồng vào phố. Nhân cốm là ký ức của Hà Nội - ăn một miếng, nhớ một thời gắn kết bền lâu.</p>
+            <a href="#san-pham" class="btn btn--outline" data-i18n="btn_learn_more">Tìm hiểu thêm</a>
           </div>
         </article>
 
@@ -153,7 +159,7 @@
   </section>
 
   <!-- =============================== -->
-  <!-- LỘ TRÌNH PHÁT TRIỂN              -->
+  <!-- HÀNH TRÌNH DI SẢN                -->
   <!-- =============================== -->
   <section class="roadmap" id="lo-trinh">
     <div class="container roadmap__inner">
@@ -161,12 +167,12 @@
         <img src="ban-do-Viet-Nam%201.png" alt="Bản đồ Việt Nam">
       </div>
       <div class="roadmap__content reveal">
-        <h2 class="section-title section-title--left">Hành trình di sản</h2>
-        <p class="roadmap__quote">"Từ Hà Nội Trong Tôi đến Bản Sắc Việt"</p>
-        <p class="roadmap__desc">
+        <h2 class="section-title section-title--left" data-i18n="roadmap_title">Hành trình di sản</h2>
+        <p class="roadmap__quote" data-i18n="roadmap_quote">"Từ Hà Nội Trong Tôi đến Bản Sắc Việt"</p>
+        <p class="roadmap__desc" data-i18n="roadmap_desc_1">
           Bắt đầu cùng "Hà Nội Trong Tôi", chúng tôi mong muốn khắc hoạ những biểu tượng đầu tiên của mảnh đất nghìn năm văn hiến lên từng chiếc bánh nhỏ. Đây chỉ là bước khởi đầu trong hành trình dài - đưa bản sắc văn hoá Việt Nam đến gần hơn với mọi người, qua từng vùng miền, từng câu chuyện.
         </p>
-        <p class="roadmap__desc">
+        <p class="roadmap__desc" data-i18n="roadmap_desc_2">
           Từ Hà Nội, hành trình "Vị Di Sản" sẽ tiếp tục lan toả tới Huế, Hội An, Sài Gòn và khắp mọi miền Tổ quốc - nơi mỗi lát cắt ký ức đều mang theo một câu chuyện dân tộc riêng biệt, chờ được kể lại theo cách chưa từng có.
         </p>
       </div>
@@ -178,7 +184,7 @@
   <!-- =============================== -->
   <section class="products" id="san-pham">
     <div class="container">
-      <h2 class="section-title reveal">Bộ sản phẩm "Vị Di Sản"</h2>
+      <h2 class="section-title reveal" data-i18n="products_title">Bộ sản phẩm "Vị Di Sản"</h2>
 
       <div class="products__showcase reveal">
         <div class="products__box">
@@ -215,34 +221,34 @@
     </div>
     <div class="container ar-experience__inner">
       <div class="ar-experience__content reveal">
-        <h2 class="section-title section-title--left">Quét mã nghe kể chuyện</h2>
-        <p class="ar-experience__desc">Mỗi chiếc bánh là một mảnh ký ức. Chỉ với một lần quét mã, câu chuyện di sản ẩn mình trong từng hộp bánh sẽ được kể lại sống động ngay trên màn hình điện thoại của bạn.</p>
+        <h2 class="section-title section-title--left" data-i18n="ar_title">Quét mã nghe kể chuyện</h2>
+        <p class="ar-experience__desc" data-i18n="ar_desc">Mỗi chiếc bánh là một mảnh ký ức. Chỉ với một lần quét mã, câu chuyện di sản ẩn mình trong từng hộp bánh sẽ được kể lại sống động ngay trên màn hình điện thoại của bạn.</p>
 
         <ol class="ar-steps">
           <li class="ar-steps__item">
             <span class="ar-steps__number">01</span>
             <div>
-              <h3>Mở camera điện thoại</h3>
-              <p>Quét mã QR in trên hộp bánh Vị Di Sản.</p>
+              <h3 data-i18n="ar_step1_title">Mở camera điện thoại</h3>
+              <p data-i18n="ar_step1_desc">Quét mã QR in trên hộp bánh Vị Di Sản.</p>
             </div>
           </li>
           <li class="ar-steps__item">
             <span class="ar-steps__number">02</span>
             <div>
-              <h3>Xem trải nghiệm AR sống động</h3>
-              <p>Công trình di sản hiện lên chân thực ngay trước mắt bạn.</p>
+              <h3 data-i18n="ar_step2_title">Xem trải nghiệm AR sống động</h3>
+              <p data-i18n="ar_step2_desc">Công trình di sản hiện lên chân thực ngay trước mắt bạn.</p>
             </div>
           </li>
           <li class="ar-steps__item">
             <span class="ar-steps__number">03</span>
             <div>
-              <h3>Nghe câu chuyện dân tộc</h3>
-              <p>Lắng nghe những lát cắt ký ức được kể lại theo cách chưa từng có.</p>
+              <h3 data-i18n="ar_step3_title">Nghe câu chuyện dân tộc</h3>
+              <p data-i18n="ar_step3_desc">Lắng nghe những lát cắt ký ức được kể lại theo cách chưa từng có.</p>
             </div>
           </li>
         </ol>
 
-        <a href="#dat-hop-qua" class="btn btn--on-dark">Khám phá ở đây!</a>
+        <a href="#dat-hop-qua" class="btn btn--on-dark" data-i18n="ar_cta">Khám phá ở đây!</a>
       </div>
 
       <div class="ar-experience__media reveal">
@@ -260,22 +266,22 @@
       <img src="Artboard%201@2x%201.png" alt="">
     </div>
     <div class="container">
-      <h2 class="section-title reveal">Đặt hộp quà của bạn</h2>
-      <p class="order__subtitle reveal">Nương Bắc Và Vị Di Sản</p>
+      <h2 class="section-title reveal" data-i18n="order_title">Đặt hộp quà của bạn</h2>
+      <p class="order__subtitle reveal" data-i18n="order_subtitle">Nương Bắc Và Vị Di Sản</p>
 
       <div class="order__forms">
 
         <!-- Khách lẻ -->
         <form class="order-card reveal" id="formKhachLe">
-          <h3 class="order-card__title">Khách lẻ</h3>
-          <p class="order-card__product">Hộp 4 chiếc "Hà Nội Trong Tôi"</p>
+          <h3 class="order-card__title" data-i18n="order_retail_title">Khách lẻ</h3>
+          <p class="order-card__product" data-i18n="order_retail_product">Hộp 4 chiếc "Hà Nội Trong Tôi"</p>
           <p class="order-card__price">
-            <span class="order-card__price-old">159.000 đ</span>
-            <span class="order-card__price-new">139.000 đ</span>
+            <span class="order-card__price-old" data-i18n="order_price_old">159.000 đ</span>
+            <span class="order-card__price-new" data-i18n="order_price_new">139.000 đ</span>
           </p>
 
           <div class="order-card__field">
-            <label for="soLuong">Số lượng</label>
+            <label for="soLuong" data-i18n="order_qty_label">Số lượng</label>
             <div class="quantity-input">
               <button type="button" class="quantity-input__btn" data-action="decrease" aria-label="Giảm số lượng">−</button>
               <input type="number" id="soLuong" name="soLuong" value="1" min="1">
@@ -284,36 +290,36 @@
           </div>
 
           <div class="order-card__actions">
-            <button type="submit" class="btn btn--outline">Tìm hiểu 4 hộp trong 4 hương vị</button>
-            <button type="submit" class="btn btn--primary">Mua ngay</button>
+            <button type="submit" class="btn btn--outline" data-i18n="order_btn_learn">Tìm hiểu 4 hộp trong 4 hương vị</button>
+            <button type="submit" class="btn btn--primary" data-i18n="order_btn_buy">Mua ngay</button>
           </div>
         </form>
 
         <!-- Doanh nghiệp -->
         <form class="order-card order-card--business reveal" id="formDoanhNghiep">
-          <h3 class="order-card__title">Doanh nghiệp - Ngoại giao</h3>
-          <p class="order-card__product">Quà tặng số lượng lớn theo yêu cầu doanh nghiệp</p>
+          <h3 class="order-card__title" data-i18n="order_business_title">Doanh nghiệp - Ngoại giao</h3>
+          <p class="order-card__product" data-i18n="order_business_product">Quà tặng số lượng lớn theo yêu cầu doanh nghiệp</p>
 
           <div class="order-card__grid">
             <div class="order-card__field">
-              <label for="hoTen">Họ tên</label>
-              <input type="text" id="hoTen" name="hoTen" placeholder="Nhập họ tên của bạn">
+              <label for="hoTen" data-i18n="label_fullname">Họ tên</label>
+              <input type="text" id="hoTen" name="hoTen" placeholder="Nhập họ tên của bạn" data-i18n-placeholder="placeholder_fullname">
             </div>
             <div class="order-card__field">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" placeholder="Nhập email của bạn">
+              <label for="email" data-i18n="label_email">Email</label>
+              <input type="email" id="email" name="email" placeholder="Nhập email của bạn" data-i18n-placeholder="placeholder_email">
             </div>
             <div class="order-card__field">
-              <label for="soDienThoai">Số điện thoại</label>
-              <input type="tel" id="soDienThoai" name="soDienThoai" placeholder="Nhập số điện thoại">
+              <label for="soDienThoai" data-i18n="label_phone">Số điện thoại</label>
+              <input type="tel" id="soDienThoai" name="soDienThoai" placeholder="Nhập số điện thoại" data-i18n-placeholder="placeholder_phone">
             </div>
             <div class="order-card__field">
-              <label for="soLuongDat">Số lượng đặt</label>
-              <input type="number" id="soLuongDat" name="soLuongDat" placeholder="Nhập số lượng cần đặt" min="1">
+              <label for="soLuongDat" data-i18n="label_qty_order">Số lượng đặt</label>
+              <input type="number" id="soLuongDat" name="soLuongDat" placeholder="Nhập số lượng cần đặt" min="1" data-i18n-placeholder="placeholder_qty_order">
             </div>
           </div>
 
-          <button type="submit" class="btn btn--primary order-card__submit">Gửi yêu cầu</button>
+          <button type="submit" class="btn btn--primary order-card__submit" data-i18n="order_btn_submit">Gửi yêu cầu</button>
         </form>
 
       </div>
@@ -332,42 +338,50 @@
         <img src="dau-lat-cat-3.png" alt="Vị Di Sản" class="logo__stamp">
         <span class="logo__text">VỊ DI SẢN</span>
       </a>
-      <p class="footer__desc">Vị Di Sản mang những công trình biểu tượng của Hà Nội nghìn năm văn hiến vào từng chiếc bánh, kết nối ẩm thực - văn hoá - công nghệ - trải nghiệm.</p>
+      <p class="footer__desc" data-i18n="footer_brand_desc">Vị Di Sản mang những công trình biểu tượng của Hà Nội nghìn năm văn hiến vào từng chiếc bánh, kết nối ẩm thực - văn hoá - công nghệ - trải nghiệm.</p>
     </div>
 
     <div class="footer__col">
-      <h4>Vị di sản</h4>
+      <h4 data-i18n="footer_col1_title">Vị di sản</h4>
       <ul>
-        <li><a href="#san-pham">Bộ sưu tập</a></li>
-        <li><a href="#bon-cau-chuyen">Bốn câu chuyện</a></li>
-        <li><a href="#trai-nghiem-ar">Trải nghiệm AR</a></li>
-        <li><a href="#dat-hop-qua">Đặt hộp quà</a></li>
+        <li><a href="#san-pham" data-i18n="nav_collection">Bộ sưu tập</a></li>
+        <li><a href="#bon-cau-chuyen" data-i18n="nav_stories">Bốn câu chuyện</a></li>
+        <li><a href="#trai-nghiem-ar" data-i18n="nav_ar">Trải nghiệm AR</a></li>
+        <li><a href="#dat-hop-qua" data-i18n="nav_order">Đặt hộp quà</a></li>
       </ul>
     </div>
 
     <div class="footer__col">
-      <h4>Thông tin liên hệ</h4>
+      <h4 data-i18n="footer_col2_title">Thông tin liên hệ</h4>
       <ul class="footer__contact">
-        <li>Địa chỉ: Số 1, Ngõ Thượng Đình, Hà Nội</li>
-        <li>Hotline: (024) 1234 5678</li>
-        <li>Email: hello@vidisan.vn</li>
+        <li data-i18n="footer_address">Địa chỉ: Số 1, Ngõ Thượng Đình, Hà Nội</li>
+        <li data-i18n="footer_hotline">Hotline: (024) 1234 5678</li>
+        <li data-i18n="footer_email">Email: hello@vidisan.vn</li>
       </ul>
     </div>
 
     <div class="footer__col">
-      <h4>Kết nối với chúng tôi</h4>
+      <h4 data-i18n="footer_col3_title">Kết nối với chúng tôi</h4>
       <div class="footer__socials">
-        <a href="#" aria-label="Facebook">FB</a>
-        <a href="#" aria-label="Instagram">IG</a>
-        <a href="#" aria-label="Zalo">Zalo</a>
-        <a href="#" aria-label="TikTok">TikTok</a>
+        <a href="#" aria-label="Facebook" class="footer__social-link">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.16 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.51 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.44 2.91h-2.34V22c4.78-.78 8.44-4.94 8.44-9.94Z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram" class="footer__social-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+        </a>
+        <a href="#" aria-label="Zalo" class="footer__social-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.2 6.4L4 20l1.2-3.4A7.96 7.96 0 0 1 4 12Z"/><path d="M9 10.5h3.2M9 13.5h4.5M14 10.5h1"/></svg>
+        </a>
+        <a href="#" aria-label="TikTok" class="footer__social-link">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 5.82c-.7-.76-1.1-1.75-1.1-2.82h-3.05v13.3a2.6 2.6 0 1 1-1.84-2.49v-3.13a5.6 5.6 0 1 0 4.89 5.55V9.4a7.6 7.6 0 0 0 4.4 1.4V7.75a4.6 4.6 0 0 1-3.3-1.93Z"/></svg>
+        </a>
       </div>
     </div>
   </div>
 
   <div class="footer__bottom">
     <div class="container">
-      <p>&copy; 2026 Vị Di Sản by Nương Bắc. Bảo lưu mọi quyền.</p>
+      <p data-i18n="footer_copyright">&copy; 2026 Vị Di Sản by Nương Bắc. Bảo lưu mọi quyền.</p>
     </div>
   </div>
 </footer>

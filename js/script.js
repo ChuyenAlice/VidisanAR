@@ -2,6 +2,193 @@
    VỊ DI SẢN — LANDING PAGE SCRIPT
    ========================================================= */
 
+/* ---------- TỪ ĐIỂN ĐA NGÔN NGỮ (VI / EN) ---------- */
+const translations = {
+  vi: {
+    nav_collection: "Bộ sưu tập",
+    nav_stories: "Bốn câu chuyện",
+    nav_ar: "Trải nghiệm AR",
+    nav_order: "Đặt hộp quà",
+    nav_business: "Doanh nghiệp",
+
+    hero_title: "HÀ NỘI TRONG TÔI",
+    hero_subtitle_1: "Trải nghiệm Hà Nội nghìn năm theo cách chưa từng có",
+    hero_subtitle_2: "Sự kết hợp hoàn hảo giữa Ẩm thực - Văn hóa - Công nghệ - Trải nghiệm",
+    hero_cta: "Khám phá ngay",
+
+    stories_title: "Bốn Biểu tượng",
+    stories_title_script: "Bốn Câu Chuyện",
+
+    story1_title: "Văn Miếu - Quốc Tử Giám",
+    story1_caption: "\"Đỗ - Thành Tài\"",
+    story1_desc: "Dựng từ 1070 dưới thời Lý Thánh Tông, Văn Miếu là biểu tượng cho truyền thống hiếu học ngàn năm của người Hà Nội. Bánh mang hoa văn mái ngói cong và cửa sổ tròn - lời chúc đỗ đạt, thành tài gửi đến người thân yêu.",
+
+    story2_title: "Tháp Rùa",
+    story2_caption: "\"Bình Yên - Trường Tồn\"",
+    story2_desc: "Giữa lòng Hồ Gươm, Tháp Rùa lặng lẽ như nhắc lại khoảnh khắc vua Lê trả gươm - hết binh đao, đất nước trở về thanh bình. Nhân sen thanh khiết trong bánh là lời chúc: một năm an yên, trường tồn cùng năm tháng.",
+
+    story3_title: "Chùa Một Cột",
+    story3_caption: "\"Sinh - Phúc Lành\"",
+    story3_desc: "Ngôi chùa mọc lên từ một giấc mơ - vua Lý Thái Tông mơ thấy Quan Âm trao con trên đài sen, và điều lành hiện thực. Nhân đậu đỏ ấm áp là lời chúc: phúc lành gõ cửa nhà bạn.",
+
+    story4_title: "Cầu Long Biên",
+    story4_caption: "\"Bền - Gắn Kết\"",
+    story4_desc: "Hơn một thế kỷ, cây cầu sắt già chứng kiến những gánh cốm thu đi qua sông Hồng vào phố. Nhân cốm là ký ức của Hà Nội - ăn một miếng, nhớ một thời gắn kết bền lâu.",
+
+    btn_learn_more: "Tìm hiểu thêm",
+
+    roadmap_title: "Hành trình di sản",
+    roadmap_quote: "\"Từ Hà Nội Trong Tôi đến Bản Sắc Việt\"",
+    roadmap_desc_1: "Bắt đầu cùng \"Hà Nội Trong Tôi\", chúng tôi mong muốn khắc hoạ những biểu tượng đầu tiên của mảnh đất nghìn năm văn hiến lên từng chiếc bánh nhỏ. Đây chỉ là bước khởi đầu trong hành trình dài - đưa bản sắc văn hoá Việt Nam đến gần hơn với mọi người, qua từng vùng miền, từng câu chuyện.",
+    roadmap_desc_2: "Từ Hà Nội, hành trình \"Vị Di Sản\" sẽ tiếp tục lan toả tới Huế, Hội An, Sài Gòn và khắp mọi miền Tổ quốc - nơi mỗi lát cắt ký ức đều mang theo một câu chuyện dân tộc riêng biệt, chờ được kể lại theo cách chưa từng có.",
+
+    products_title: "Bộ sản phẩm \"Vị Di Sản\"",
+
+    ar_title: "Quét mã nghe kể chuyện",
+    ar_desc: "Mỗi chiếc bánh là một mảnh ký ức. Chỉ với một lần quét mã, câu chuyện di sản ẩn mình trong từng hộp bánh sẽ được kể lại sống động ngay trên màn hình điện thoại của bạn.",
+    ar_step1_title: "Mở camera điện thoại",
+    ar_step1_desc: "Quét mã QR in trên hộp bánh Vị Di Sản.",
+    ar_step2_title: "Xem trải nghiệm AR sống động",
+    ar_step2_desc: "Công trình di sản hiện lên chân thực ngay trước mắt bạn.",
+    ar_step3_title: "Nghe câu chuyện dân tộc",
+    ar_step3_desc: "Lắng nghe những lát cắt ký ức được kể lại theo cách chưa từng có.",
+    ar_cta: "Khám phá ở đây!",
+
+    order_title: "Đặt hộp quà của bạn",
+    order_subtitle: "Nương Bắc Và Vị Di Sản",
+    order_retail_title: "Khách lẻ",
+    order_retail_product: "Hộp 4 chiếc \"Hà Nội Trong Tôi\"",
+    order_price_old: "159.000 đ",
+    order_price_new: "139.000 đ",
+    order_qty_label: "Số lượng",
+    order_btn_learn: "Tìm hiểu 4 hộp trong 4 hương vị",
+    order_btn_buy: "Mua ngay",
+    order_business_title: "Doanh nghiệp - Ngoại giao",
+    order_business_product: "Quà tặng số lượng lớn theo yêu cầu doanh nghiệp",
+
+    label_fullname: "Họ tên",
+    placeholder_fullname: "Nhập họ tên của bạn",
+    label_email: "Email",
+    placeholder_email: "Nhập email của bạn",
+    label_phone: "Số điện thoại",
+    placeholder_phone: "Nhập số điện thoại",
+    label_qty_order: "Số lượng đặt",
+    placeholder_qty_order: "Nhập số lượng cần đặt",
+    order_btn_submit: "Gửi yêu cầu",
+
+    footer_brand_desc: "Vị Di Sản mang những công trình biểu tượng của Hà Nội nghìn năm văn hiến vào từng chiếc bánh, kết nối ẩm thực - văn hoá - công nghệ - trải nghiệm.",
+    footer_col1_title: "Vị di sản",
+    footer_col2_title: "Thông tin liên hệ",
+    footer_address: "Địa chỉ: Số 1, Ngõ Thượng Đình, Hà Nội",
+    footer_hotline: "Hotline: (024) 1234 5678",
+    footer_email: "Email: hello@vidisan.vn",
+    footer_col3_title: "Kết nối với chúng tôi",
+    footer_copyright: "© 2026 Vị Di Sản by Nương Bắc. Bảo lưu mọi quyền.",
+  },
+
+  en: {
+    nav_collection: "Collection",
+    nav_stories: "Four Stories",
+    nav_ar: "AR Experience",
+    nav_order: "Order a Gift Box",
+    nav_business: "Business",
+
+    hero_title: "HANOI IN MY HEART",
+    hero_subtitle_1: "Experience a thousand years of Hanoi like never before",
+    hero_subtitle_2: "A perfect blend of Gastronomy - Culture - Technology - Experience",
+    hero_cta: "Explore Now",
+
+    stories_title: "Four Symbols",
+    stories_title_script: "Four Stories",
+
+    story1_title: "Temple of Literature",
+    story1_caption: "\"Success - Achievement\"",
+    story1_desc: "Built in 1070 under King Lý Thánh Tông, the Temple of Literature stands for a thousand years of Hanoi's devotion to learning. The cake carries the curved tiled roof and round window - a wish of success and achievement for your loved ones.",
+
+    story2_title: "Turtle Tower",
+    story2_caption: "\"Peace - Eternity\"",
+    story2_desc: "In the heart of Hoàn Kiếm Lake, Turtle Tower stands quietly, echoing the moment King Lê returned the sacred sword - when war gave way to peace. The pure lotus filling is a wish for a peaceful year that endures through time.",
+
+    story3_title: "One Pillar Pagoda",
+    story3_caption: "\"Birth - Blessing\"",
+    story3_desc: "Born from a dream - King Lý Thái Tông envisioned Quan Âm handing him a child upon a lotus throne, and the dream became reality. The warm red bean filling carries a wish: may blessings find their way to your door.",
+
+    story4_title: "Long Biên Bridge",
+    story4_caption: "\"Resilience - Connection\"",
+    story4_desc: "For over a century, this old iron bridge has watched autumn cốm vendors cross the Red River into the city. The cốm filling is Hanoi's living memory - one bite, one lasting connection.",
+
+    btn_learn_more: "Learn More",
+
+    roadmap_title: "Heritage Journey",
+    roadmap_quote: "\"From Hanoi In My Heart to Vietnamese Identity\"",
+    roadmap_desc_1: "Beginning with \"Hanoi In My Heart\", we set out to capture the first symbols of this thousand-year-old land in every small cake. This is only the first step of a much longer journey - bringing Vietnamese culture closer to everyone, one region and one story at a time.",
+    roadmap_desc_2: "From Hanoi, the \"Vị Di Sản\" journey will continue to spread to Huế, Hội An, Sài Gòn and every corner of the homeland - where every slice of memory carries its own story, waiting to be told like never before.",
+
+    products_title: "The \"Vị Di Sản\" Collection",
+
+    ar_title: "Scan to Hear the Story",
+    ar_desc: "Every cake holds a fragment of memory. With a single scan, the heritage story hidden within each box comes vividly to life right on your phone screen.",
+    ar_step1_title: "Open your phone camera",
+    ar_step1_desc: "Scan the QR code printed on the Vị Di Sản box.",
+    ar_step2_title: "Watch the AR experience come alive",
+    ar_step2_desc: "The heritage monument appears vividly right before your eyes.",
+    ar_step3_title: "Listen to the nation's story",
+    ar_step3_desc: "Listen to fragments of memory told like never before.",
+    ar_cta: "Discover It Here!",
+
+    order_title: "Order Your Gift Box",
+    order_subtitle: "Nương Bắc & Vị Di Sản",
+    order_retail_title: "Individual Customers",
+    order_retail_product: "Set of 4 \"Hanoi In My Heart\" Cakes",
+    order_price_old: "159,000 VND",
+    order_price_new: "139,000 VND",
+    order_qty_label: "Quantity",
+    order_btn_learn: "Explore All 4 Flavors",
+    order_btn_buy: "Buy Now",
+    order_business_title: "Business & Corporate Gifting",
+    order_business_product: "Bulk gifts tailored to your business needs",
+
+    label_fullname: "Full Name",
+    placeholder_fullname: "Enter your full name",
+    label_email: "Email",
+    placeholder_email: "Enter your email",
+    label_phone: "Phone Number",
+    placeholder_phone: "Enter your phone number",
+    label_qty_order: "Order Quantity",
+    placeholder_qty_order: "Enter the quantity needed",
+    order_btn_submit: "Submit Request",
+
+    footer_brand_desc: "Vị Di Sản brings Hanoi's thousand-year-old landmarks into every cake, connecting gastronomy, culture, technology and experience.",
+    footer_col1_title: "Explore",
+    footer_col2_title: "Contact Information",
+    footer_address: "Address: No. 1, Thượng Đình Alley, Hanoi",
+    footer_hotline: "Hotline: (024) 1234 5678",
+    footer_email: "Email: hello@vidisan.vn",
+    footer_col3_title: "Connect With Us",
+    footer_copyright: "© 2026 Vị Di Sản by Nương Bắc. All rights reserved.",
+  },
+};
+
+let currentLang = "vi";
+
+function applyTranslations(lang) {
+  const dict = translations[lang];
+  if (!dict) return;
+
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.dataset.i18n;
+    if (dict[key] !== undefined) el.textContent = dict[key];
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    const key = el.dataset.i18nPlaceholder;
+    if (dict[key] !== undefined) el.setAttribute("placeholder", dict[key]);
+  });
+
+  document.documentElement.lang = lang;
+  currentLang = lang;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
 
   /* ---------- 1. HEADER: đổi trạng thái khi cuộn trang ---------- */
@@ -40,11 +227,17 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* ---------- 3. TOGGLE NGÔN NGỮ (VN / EN) ---------- */
-  // Giao diện tạm thời chỉ đổi trạng thái nút, chưa xử lý dịch nội dung thực tế.
   const langToggle = document.getElementById("langToggle");
-  langToggle.addEventListener("click", () => {
-    const options = langToggle.querySelectorAll(".lang-toggle__option");
-    options.forEach((opt) => opt.classList.toggle("is-active"));
+  const langOptions = langToggle.querySelectorAll(".lang-toggle__option");
+
+  langToggle.addEventListener("click", (e) => {
+    const target = e.target.closest(".lang-toggle__option");
+    const nextLang = target ? target.dataset.lang : (currentLang === "vi" ? "en" : "vi");
+
+    if (nextLang === currentLang) return;
+
+    langOptions.forEach((opt) => opt.classList.toggle("is-active", opt.dataset.lang === nextLang));
+    applyTranslations(nextLang);
   });
 
   /* ---------- 4. CUỘN MƯỢT ĐẾN ANCHOR ---------- */
