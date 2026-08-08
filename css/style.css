@@ -110,6 +110,16 @@ section { position: relative; }
   transform: translateY(-3px);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25);
 }
+.btn--outline-cream {
+  background: transparent;
+  color: var(--color-cream);
+  border: 1.5px solid rgba(251, 242, 227, 0.6);
+}
+.btn--outline-cream:hover, .btn--outline-cream:focus-visible {
+  background: rgba(251, 242, 227, 0.12);
+  border-color: var(--color-cream);
+  transform: translateY(-3px);
+}
 .btn:active { transform: translateY(0); }
 
 /* ---------- 4. SECTION TITLES ---------- */
@@ -229,7 +239,7 @@ section { position: relative; }
    HERO
    ========================================================= */
 .hero {
-  padding: 160px 0 120px;
+  padding: 160px 0 60px;
   text-align: center;
   overflow: hidden;
   background:
@@ -333,7 +343,7 @@ section { position: relative; }
 /* =========================================================
    BỐN BIỂU TƯỢNG — STORIES
    ========================================================= */
-.stories { padding: 110px 0 100px; overflow: hidden; }
+.stories { padding: 70px 0 80px; overflow: hidden; }
 
 /* Dải trang trí dưới tiêu đề section */
 .section-divider {
@@ -459,7 +469,7 @@ section { position: relative; }
    LỘ TRÌNH PHÁT TRIỂN — ROADMAP
    ========================================================= */
 .roadmap {
-  padding: 120px 0;
+  padding: 90px 0;
   background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-cream-dark) 100%);
 }
 .roadmap__inner {
@@ -485,7 +495,7 @@ section { position: relative; }
 /* =========================================================
    BỘ SẢN PHẨM
    ========================================================= */
-.products { padding: 120px 0; }
+.products { padding: 90px 0; }
 .products__showcase {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
@@ -526,20 +536,12 @@ section { position: relative; }
    TRẢI NGHIỆM AR
    ========================================================= */
 .ar-experience {
-  padding: 120px 0;
+  padding: 90px 0;
   background: var(--color-maroon);
   color: var(--color-cream);
   overflow: hidden;
 }
 .ar-experience .section-title--left { color: var(--color-cream); }
-.ar-experience__ribbon {
-  position: absolute;
-  bottom: -40px;
-  right: -80px;
-  width: 480px;
-  opacity: 0.9;
-  pointer-events: none;
-}
 .ar-experience__inner {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -620,81 +622,145 @@ section { position: relative; }
 }
 
 .order-card {
-  background: var(--color-white);
+  position: relative;
+  background: var(--color-maroon);
+  color: var(--color-cream);
   border-radius: var(--radius-lg);
-  padding: 36px;
+  padding: 40px;
+  overflow: hidden;
   box-shadow: var(--shadow-soft);
-  border: 1px solid rgba(123, 30, 36, 0.1);
 }
-.order-card__title {
-  font-family: var(--font-heading);
-  font-size: 22px;
-  color: var(--color-maroon);
-  margin-bottom: 10px;
-}
-.order-card__product { font-size: 14.5px; color: var(--color-ink-soft); margin-bottom: 12px; }
-.order-card__price { display: flex; align-items: baseline; gap: 10px; margin-bottom: 24px; }
-.order-card__price-old { text-decoration: line-through; color: var(--color-ink-soft); font-size: 14px; }
-.order-card__price-new { color: var(--color-maroon); font-size: 24px; font-weight: 700; }
+.order-card__body { position: relative; z-index: 1; }
 
-.order-card__field { margin-bottom: 18px; }
-.order-card__field label {
-  display: block;
-  font-size: 13px;
+.order-card__label {
+  font-size: 14px;
   font-weight: 600;
-  color: var(--color-ink-soft);
+  letter-spacing: 0.04em;
+  color: rgba(251, 242, 227, 0.7);
   margin-bottom: 6px;
 }
-.order-card__field input {
-  width: 100%;
-  padding: 12px 16px;
-  border: 1.5px solid rgba(123, 30, 36, 0.18);
-  border-radius: 10px;
-  background: var(--color-cream);
-  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+.order-card__heading {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  color: var(--color-cream);
+  margin-bottom: 14px;
 }
-.order-card__field input:focus {
-  outline: none;
-  border-color: var(--color-maroon);
-  box-shadow: 0 0 0 3px rgba(123, 30, 36, 0.12);
+.order-card__subtitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-gold-light);
+  margin-bottom: 16px;
+}
+.order-card__desc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(251, 242, 227, 0.8);
+  margin-bottom: 14px;
 }
 
-.quantity-input {
-  display: inline-flex;
-  align-items: center;
-  border: 1.5px solid rgba(123, 30, 36, 0.18);
-  border-radius: 999px;
-  overflow: hidden;
+.order-card__price-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px 0 22px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(251, 242, 227, 0.2);
 }
-.quantity-input__btn {
-  width: 40px;
-  height: 40px;
-  font-size: 18px;
+.order-card__price-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 14.5px;
+  color: rgba(251, 242, 227, 0.85);
+}
+.order-card__price-list strong {
+  font-family: var(--font-heading);
+  font-size: 17px;
   font-weight: 700;
-  color: var(--color-maroon);
-  transition: background var(--transition-base);
+  color: var(--color-gold-light);
 }
-.quantity-input__btn:hover { background: var(--color-cream-dark); }
-.quantity-input input {
-  width: 56px;
-  text-align: center;
-  border: none;
-  background: transparent;
-  -moz-appearance: textfield;
+
+.order-card__badge {
+  display: inline-block;
+  background: var(--color-cream);
+  color: var(--color-maroon-dark);
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 999px;
+  margin-bottom: 26px;
 }
-.quantity-input input::-webkit-outer-spin-button,
-.quantity-input input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
-.order-card__actions { display: flex; flex-direction: column; gap: 12px; margin-top: 26px; }
-.order-card__actions .btn { width: 100%; }
+.order-card__actions { display: flex; gap: 12px; flex-wrap: wrap; }
 
-.order-card--business .order-card__grid {
+.order-card__contact {
+  display: flex;
+  gap: 40px;
+  margin: 20px 0 28px;
+  flex-wrap: wrap;
+}
+.order-card__contact-label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: rgba(251, 242, 227, 0.6);
+  margin-bottom: 4px;
+}
+.order-card__contact-value {
+  font-size: 14.5px;
+  color: var(--color-cream);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--transition-base);
+}
+.order-card__contact-value:hover { color: var(--color-gold-light); }
+
+.order-card__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 18px;
-  margin-top: 20px;
+  gap: 22px 28px;
+  margin-bottom: 20px;
 }
-.order-card__submit { margin-top: 10px; width: 100%; }
+.order-card__field--underline label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(251, 242, 227, 0.65);
+  margin-bottom: 8px;
+}
+.order-card__field--underline input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(251, 242, 227, 0.35);
+  color: var(--color-cream);
+  padding: 6px 2px 10px;
+  transition: border-color var(--transition-base);
+}
+.order-card__field--underline input::placeholder { color: rgba(251, 242, 227, 0.4); }
+.order-card__field--underline input:focus { outline: none; border-color: var(--color-gold-light); }
+.order-card__field--full { margin-bottom: 22px; }
+
+.order-card__footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.order-card__note { font-size: 13px; color: rgba(251, 242, 227, 0.6); }
+
+.order-card__deco {
+  position: absolute;
+  bottom: -24px;
+  left: -24px;
+  width: 230px;
+  opacity: 0.14;
+  pointer-events: none;
+  z-index: 0;
+}
+.order-card__deco--business { left: auto; right: -24px; }
 
 /* =========================================================
    FOOTER
@@ -786,7 +852,9 @@ section { position: relative; }
   .ar-experience__desc,
   .ar-steps__item { text-align: left; }
 
-  .order__forms { grid-template-columns: 1fr; }
+  .order__forms { grid-template-columns: 1fr; gap: 24px; }
+  .order-card { padding: 32px; }
+  .order-card__deco { width: 160px; opacity: 0.1; }
 
   .footer__inner { grid-template-columns: 1fr 1fr; }
 }
@@ -795,15 +863,26 @@ section { position: relative; }
    RESPONSIVE — MOBILE / SMALL TABLET (≤ 768px)
    ========================================================= */
 @media (max-width: 768px) {
-  .nav { position: fixed; top: 76px; left: 0; right: 0; bottom: 0;
+  .nav {
+    position: fixed;
+    top: 76px;
+    left: 0;
+    right: 0;
+    /* Dùng height cố định thay vì bottom:0 — .site-header có backdrop-filter,
+       nên nó trở thành containing block của phần tử fixed này; nếu dùng
+       bottom:0, chiều cao sẽ bị tính lại theo khối 76px đó và co lại chỉ
+       còn vài chục px (menu chỉ hiện được 1 mục). calc(100vh - 76px) luôn
+       tính theo viewport nên tránh được lỗi này. */
+    height: calc(100vh - 76px);
     background: var(--color-cream);
     transform: translateX(100%);
     transition: transform var(--transition-base);
     padding: 30px 24px;
     overflow-y: auto;
+    z-index: 999;
   }
   .nav.is-open { transform: translateX(0); }
-  .nav__list { flex-direction: column; align-items: flex-start; gap: 22px; }
+  .nav__list { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; width: 100%; }
   .nav__link { font-size: 18px; }
   .hamburger { display: flex; }
 
@@ -833,7 +912,16 @@ section { position: relative; }
   .ar-experience__qr { width: 90px; }
 
   .order-card { padding: 26px; }
-  .order-card--business .order-card__grid { grid-template-columns: 1fr; }
+  .order-card__heading { font-size: 21px; }
+  .order-card__price-list li { font-size: 13.5px; }
+  .order-card__price-list strong { font-size: 15.5px; }
+  .order-card__actions,
+  .order-card__footer-row { flex-direction: column; align-items: stretch; }
+  .order-card__actions .btn,
+  .order-card__footer-row .btn { width: 100%; }
+  .order-card__contact { gap: 24px; }
+  .order-card--business .order-card__grid { grid-template-columns: 1fr; gap: 18px; }
+  .order-card__deco { width: 120px; opacity: 0.08; }
 
   .footer__inner { grid-template-columns: 1fr; padding: 50px 0 30px; gap: 30px; }
 }
@@ -844,4 +932,11 @@ section { position: relative; }
   .logo__stamp { width: 34px; height: 34px; }
   .section-title { font-size: 24px; }
   .products__grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  .order-card { padding: 22px; }
+  .order-card__heading { font-size: 19px; }
+  .order-card__desc { font-size: 13px; }
+  .order-card__price-list li { flex-direction: column; align-items: flex-start; gap: 2px; }
+  .order-card__contact { flex-direction: column; gap: 16px; }
+  .order-card__deco { display: none; }
 }

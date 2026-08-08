@@ -216,9 +216,6 @@
   <!-- TRẢI NGHIỆM AR                   -->
   <!-- =============================== -->
   <section class="ar-experience" id="trai-nghiem-ar">
-    <div class="ar-experience__ribbon" aria-hidden="true">
-      <img src="Artboard%201@2x%201.png" alt="">
-    </div>
     <div class="container ar-experience__inner">
       <div class="ar-experience__content reveal">
         <h2 class="section-title section-title--left" data-i18n="ar_title">Quét mã nghe kể chuyện</h2>
@@ -272,54 +269,84 @@
       <div class="order__forms">
 
         <!-- Khách lẻ -->
-        <form class="order-card reveal" id="formKhachLe">
-          <h3 class="order-card__title" data-i18n="order_retail_title">Khách lẻ</h3>
-          <p class="order-card__product" data-i18n="order_retail_product">Hộp 4 chiếc "Hà Nội Trong Tôi"</p>
-          <p class="order-card__price">
-            <span class="order-card__price-old" data-i18n="order_price_old">159.000 đ</span>
-            <span class="order-card__price-new" data-i18n="order_price_new">139.000 đ</span>
-          </p>
+        <form class="order-card order-card--retail reveal" id="formKhachLe">
+          <div class="order-card__body">
+            <p class="order-card__label" data-i18n="order_retail_title">Khách lẻ</p>
+            <h3 class="order-card__heading" data-i18n="order_retail_heading">Hộp 4 chiếc "Hà Nội Trong Tôi"</h3>
+            <p class="order-card__desc" data-i18n="order_retail_desc">Bốn chiếc bánh trung thu nghệ thuật, tạo hình thủ công tại Hà Nội, đặt trong hộp gỗ sơn mài kèm thiệp giấy dó và bộ đế kể chuyện song ngữ Việt - Anh.</p>
 
-          <div class="order-card__field">
-            <label for="soLuong" data-i18n="order_qty_label">Số lượng</label>
-            <div class="quantity-input">
-              <button type="button" class="quantity-input__btn" data-action="decrease" aria-label="Giảm số lượng">−</button>
-              <input type="number" id="soLuong" name="soLuong" value="1" min="1">
-              <button type="button" class="quantity-input__btn" data-action="increase" aria-label="Tăng số lượng">+</button>
+            <ul class="order-card__price-list">
+              <li>
+                <span data-i18n="order_price_single_label">Bánh lẻ</span>
+                <strong data-i18n="order_price_single_value">159.000 đ / chiếc</strong>
+              </li>
+              <li>
+                <span data-i18n="order_price_box_label">Hộp 4 biểu tượng</span>
+                <strong data-i18n="order_price_box_value">599.000 đ / hộp</strong>
+              </li>
+            </ul>
+
+            <span class="order-card__badge" data-i18n="order_save_badge">Tiết kiệm 37.000 đ · save vs. 4 cakes lẻ</span>
+
+            <div class="order-card__actions">
+              <button type="submit" class="btn btn--on-dark" data-i18n="order_btn_box4">Đặt hộp 4 chiếc</button>
+              <button type="submit" class="btn btn--outline-cream" data-i18n="order_btn_single">Mua Bánh lẻ</button>
             </div>
           </div>
 
-          <div class="order-card__actions">
-            <button type="submit" class="btn btn--outline" data-i18n="order_btn_learn">Tìm hiểu 4 hộp trong 4 hương vị</button>
-            <button type="submit" class="btn btn--primary" data-i18n="order_btn_buy">Mua ngay</button>
-          </div>
+          <img src="Cau-Long-Bien%201.png" alt="" class="order-card__deco" aria-hidden="true">
         </form>
 
         <!-- Doanh nghiệp -->
         <form class="order-card order-card--business reveal" id="formDoanhNghiep">
-          <h3 class="order-card__title" data-i18n="order_business_title">Doanh nghiệp - Ngoại giao</h3>
-          <p class="order-card__product" data-i18n="order_business_product">Quà tặng số lượng lớn theo yêu cầu doanh nghiệp</p>
+          <div class="order-card__body">
+            <h3 class="order-card__heading" data-i18n="order_business_title">Doanh nghiệp - Ngoại giao</h3>
+            <p class="order-card__subtitle" data-i18n="order_business_product">Quà tặng số lượng lớn theo yêu cầu</p>
+            <p class="order-card__desc" data-i18n="order_business_desc_1">Khắc logo lên hộp gỗ, in thiệp riêng song ngữ, chọn cấu hình hộp theo nhân sự và đối tác. Tư vấn 1–1 với đội ngũ thiết kế của Vị Di Sản.</p>
+            <p class="order-card__desc" data-i18n="order_business_desc_2">Đặt số lượng từ 20 hộp trở lên, vui lòng liên hệ trực tiếp để được tư vấn ưu đãi và lịch giao hàng.</p>
 
-          <div class="order-card__grid">
-            <div class="order-card__field">
-              <label for="hoTen" data-i18n="label_fullname">Họ tên</label>
-              <input type="text" id="hoTen" name="hoTen" placeholder="Nhập họ tên của bạn" data-i18n-placeholder="placeholder_fullname">
+            <div class="order-card__contact">
+              <div>
+                <span class="order-card__contact-label" data-i18n="order_contact_phone_label">Điện thoại</span>
+                <a href="tel:0915080988" class="order-card__contact-value">0915 080 988</a>
+              </div>
+              <div>
+                <span class="order-card__contact-label" data-i18n="order_contact_email_label">Email</span>
+                <a href="mailto:congtytnhh.nuongbac90@gmail.com" class="order-card__contact-value">congtytnhh.nuongbac90@gmail.com</a>
+              </div>
             </div>
-            <div class="order-card__field">
-              <label for="email" data-i18n="label_email">Email</label>
-              <input type="email" id="email" name="email" placeholder="Nhập email của bạn" data-i18n-placeholder="placeholder_email">
+
+            <div class="order-card__grid">
+              <div class="order-card__field order-card__field--underline">
+                <label for="hoTen" data-i18n="label_fullname">Họ và tên</label>
+                <input type="text" id="hoTen" name="hoTen" placeholder="Nhập họ tên của bạn" data-i18n-placeholder="placeholder_fullname">
+              </div>
+              <div class="order-card__field order-card__field--underline">
+                <label for="donVi" data-i18n="label_company">Đơn vị</label>
+                <input type="text" id="donVi" name="donVi" placeholder="Nhập tên đơn vị" data-i18n-placeholder="placeholder_company">
+              </div>
+              <div class="order-card__field order-card__field--underline">
+                <label for="email" data-i18n="label_email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Nhập email của bạn" data-i18n-placeholder="placeholder_email">
+              </div>
+              <div class="order-card__field order-card__field--underline">
+                <label for="soLuongDat" data-i18n="label_qty_order">Số lượng</label>
+                <input type="number" id="soLuongDat" name="soLuongDat" placeholder="Nhập số lượng cần đặt" min="1" data-i18n-placeholder="placeholder_qty_order">
+              </div>
             </div>
-            <div class="order-card__field">
-              <label for="soDienThoai" data-i18n="label_phone">Số điện thoại</label>
-              <input type="tel" id="soDienThoai" name="soDienThoai" placeholder="Nhập số điện thoại" data-i18n-placeholder="placeholder_phone">
+
+            <div class="order-card__field order-card__field--underline order-card__field--full">
+              <label for="yeuCau" data-i18n="label_request">Yêu cầu cụ thể</label>
+              <input type="text" id="yeuCau" name="yeuCau" placeholder="Mô tả yêu cầu của bạn" data-i18n-placeholder="placeholder_request">
             </div>
-            <div class="order-card__field">
-              <label for="soLuongDat" data-i18n="label_qty_order">Số lượng đặt</label>
-              <input type="number" id="soLuongDat" name="soLuongDat" placeholder="Nhập số lượng cần đặt" min="1" data-i18n-placeholder="placeholder_qty_order">
+
+            <div class="order-card__footer-row">
+              <p class="order-card__note" data-i18n="order_response_note">Phản hồi trong 24 giờ làm việc.</p>
+              <button type="submit" class="btn btn--on-dark" data-i18n="order_btn_submit">Gửi yêu cầu!</button>
             </div>
           </div>
 
-          <button type="submit" class="btn btn--primary order-card__submit" data-i18n="order_btn_submit">Gửi yêu cầu</button>
+          <img src="Thap-Rua%201.png" alt="" class="order-card__deco order-card__deco--business" aria-hidden="true">
         </form>
 
       </div>
