@@ -54,7 +54,15 @@
   <!-- HERO SECTION                     -->
   <!-- =============================== -->
   <section class="hero" id="hero">
-    <div class="hero__bg-lines" aria-hidden="true"></div>
+    <!-- ELEMENT NỀN: các hoạ tiết nền lấy đúng theo layer Figma -->
+    <div class="hero__bg" aria-hidden="true">
+      <img src="van-mieu.png" class="hero__bg-el hero__bg-el--van-mieu" alt="">
+      <img src="thap-rua-1.png" class="hero__bg-el hero__bg-el--thap-rua" alt="">
+      <img src="chua-mot-cot-1.png" class="hero__bg-el hero__bg-el--chua-mot-cot" alt="">
+      <img src="cau-long-bien.png" class="hero__bg-el hero__bg-el--cau-long-bien" alt="">
+      <img src="bong-sen-1.png" class="hero__bg-el hero__bg-el--bong-sen-1" alt="">
+      <img src="bong-sen-2.png" class="hero__bg-el hero__bg-el--bong-sen-2" alt="">
+    </div>
     <div class="container hero__inner">
       <div class="hero__heading reveal">
         <h1 class="hero__title">HÀ NỘI TRONG TÔI</h1>
@@ -66,12 +74,7 @@
       <img src="dau-lat-cat-3.png" alt="Lát cắt ký ức - Câu chuyện dân tộc" class="hero__badge reveal">
 
       <div class="hero__products reveal">
-        <div class="hero__pedestal">
-          <img src="chua-1-cot.png" alt="Bánh Chùa Một Cột" class="hero__cake hero__cake--1">
-          <img src="van-mieu-11.png" alt="Bánh Văn Miếu" class="hero__cake hero__cake--2">
-          <img src="thap-rua.png" alt="Bánh Tháp Rùa" class="hero__cake hero__cake--3">
-          <img src="cau-long-bien-11.png" alt="Bánh Cầu Long Biên" class="hero__cake hero__cake--4">
-        </div>
+        <img src="B%E1%BB%A5c%20v%C3%A0%20b%C3%A1nh.png" alt="Bốn chiếc bánh Vị Di Sản trên bục gỗ" class="hero__pedestal-img">
       </div>
     </div>
   </section>
@@ -80,7 +83,6 @@
   <!-- BỐN BIỂU TƯỢNG / BỐN CÂU CHUYỆN  -->
   <!-- =============================== -->
   <section class="stories" id="bon-cau-chuyen">
-    <div class="stories__bg" aria-hidden="true"></div>
     <div class="container">
       <h2 class="section-title reveal">Bốn Biểu tượng <span class="section-title__script">Bốn Câu Chuyện</span></h2>
 
@@ -89,9 +91,16 @@
       </div>
 
       <div class="stories__list">
+        <!-- Dải núi non & đường mòn vàng nối 4 câu chuyện di sản -->
+        <div class="stories__path-bg" aria-hidden="true">
+          <img src="ban-do-viet-nam.png" alt="">
+        </div>
 
         <article class="story-item story-item--right reveal">
-          <img src="Van-Mieu%201.png" alt="Văn Miếu - Quốc Tử Giám" class="story-item__image">
+          <div class="story-item__media">
+            <img src="Van-Mieu%201.png" alt="Văn Miếu - Quốc Tử Giám" class="story-item__image">
+            <img src="van-mieu-11.png" alt="" class="story-item__coin" aria-hidden="true">
+          </div>
           <div class="story-item__content">
             <h3 class="story-item__title">Văn Miếu - Quốc Tử Giám</h3>
             <p class="story-item__caption">"Đỗ - Thành Tài"</p>
@@ -101,7 +110,10 @@
         </article>
 
         <article class="story-item story-item--left reveal">
-          <img src="Thap-Rua%201.png" alt="Tháp Rùa" class="story-item__image">
+          <div class="story-item__media">
+            <img src="Thap-Rua%201.png" alt="Tháp Rùa" class="story-item__image">
+            <img src="thap-rua.png" alt="" class="story-item__coin" aria-hidden="true">
+          </div>
           <div class="story-item__content">
             <h3 class="story-item__title">Tháp Rùa</h3>
             <p class="story-item__caption">"Bình Yên - Trường Tồn"</p>
@@ -111,7 +123,10 @@
         </article>
 
         <article class="story-item story-item--right reveal">
-          <img src="Chua-Mot-Cot%201.png" alt="Chùa Một Cột" class="story-item__image">
+          <div class="story-item__media">
+            <img src="Chua-Mot-Cot%201.png" alt="Chùa Một Cột" class="story-item__image">
+            <img src="chua-1-cot.png" alt="" class="story-item__coin" aria-hidden="true">
+          </div>
           <div class="story-item__content">
             <h3 class="story-item__title">Chùa Một Cột</h3>
             <p class="story-item__caption">"Sinh - Phúc Lành"</p>
@@ -121,7 +136,10 @@
         </article>
 
         <article class="story-item story-item--left reveal">
-          <img src="Cau-Long-Bien%201.png" alt="Cầu Long Biên" class="story-item__image">
+          <div class="story-item__media">
+            <img src="Cau-Long-Bien%201.png" alt="Cầu Long Biên" class="story-item__image">
+            <img src="cau-long-bien-11.png" alt="" class="story-item__coin" aria-hidden="true">
+          </div>
           <div class="story-item__content">
             <h3 class="story-item__title">Cầu Long Biên</h3>
             <p class="story-item__caption">"Bền - Gắn Kết"</p>
@@ -143,7 +161,7 @@
         <img src="ban-do-Viet-Nam%201.png" alt="Bản đồ Việt Nam">
       </div>
       <div class="roadmap__content reveal">
-        <h2 class="section-title section-title--left">Lộ trình phát triển</h2>
+        <h2 class="section-title section-title--left">Hành trình di sản</h2>
         <p class="roadmap__quote">"Từ Hà Nội Trong Tôi đến Bản Sắc Việt"</p>
         <p class="roadmap__desc">
           Bắt đầu cùng "Hà Nội Trong Tôi", chúng tôi mong muốn khắc hoạ những biểu tượng đầu tiên của mảnh đất nghìn năm văn hiến lên từng chiếc bánh nhỏ. Đây chỉ là bước khởi đầu trong hành trình dài - đưa bản sắc văn hoá Việt Nam đến gần hơn với mọi người, qua từng vùng miền, từng câu chuyện.
