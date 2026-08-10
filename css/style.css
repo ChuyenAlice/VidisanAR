@@ -274,25 +274,26 @@ section { position: relative; }
   opacity: 0.1;
 }
 .hero__bg-el--cau-long-bien {
-  bottom: -60px;
+  /* Đặt cùng mặt đất với bục bánh (~52px tính từ đáy hero) để cầu nằm
+     hẳn phía sau bục, không cắt ngang qua mặt trước của bục nữa. */
+  bottom: 52px;
   left: 50%;
   transform: translateX(-50%);
-  width: 105%;
-  max-width: 1300px;
-  opacity: 0.16;
+  width: 95%;
+  max-width: 1180px;
+  opacity: 0.13;
 }
 .hero__bg-el--bong-sen-1 {
-  bottom: -20px;
+  bottom: 52px;
   left: -40px;
   width: 260px;
   opacity: 0.5;
 }
 .hero__bg-el--bong-sen-2 {
-  bottom: -20px;
+  bottom: 52px;
   right: -40px;
   width: 240px;
   opacity: 0.5;
-  transform: scaleX(-1);
 }
 .hero__inner { position: relative; z-index: 2; }
 
@@ -495,7 +496,19 @@ section { position: relative; }
 /* =========================================================
    BỘ SẢN PHẨM
    ========================================================= */
-.products { padding: 90px 0; }
+.products { padding: 90px 0; overflow: hidden; }
+.products__bg {
+  position: absolute;
+  top: -80px;
+  right: -140px;
+  width: 480px;
+  max-width: 55%;
+  opacity: 0.1;
+  transform: rotate(8deg);
+  pointer-events: none;
+  z-index: 0;
+}
+.products > .container { position: relative; z-index: 1; }
 .products__showcase {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
@@ -763,28 +776,211 @@ section { position: relative; }
 .order-card__deco--business { left: auto; right: -24px; }
 
 /* =========================================================
+   POPUP ĐẶT HÀNG (Modal)
+   ========================================================= */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(58, 42, 30, 0.55);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 2000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-base), visibility var(--transition-base);
+}
+.modal-overlay.is-active { opacity: 1; visibility: visible; }
+
+.order-modal {
+  position: relative;
+  background: var(--color-maroon);
+  color: var(--color-cream);
+  border-radius: 28px;
+  padding: 40px;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+  transform: translateY(24px) scale(0.97);
+  transition: transform var(--transition-base);
+}
+.modal-overlay.is-active .order-modal { transform: translateY(0) scale(1); }
+
+.order-modal__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(251, 242, 227, 0.12);
+  color: var(--color-cream);
+  font-size: 22px;
+  line-height: 1;
+  transition: background var(--transition-base), transform var(--transition-base);
+}
+.order-modal__close:hover { background: rgba(251, 242, 227, 0.25); transform: rotate(90deg); }
+
+.order-modal__title {
+  font-family: var(--font-heading);
+  font-size: 26px;
+  margin-bottom: 26px;
+  padding-right: 30px;
+}
+
+.order-modal__field { margin-bottom: 20px; }
+.order-modal__field label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(251, 242, 227, 0.65);
+  margin-bottom: 8px;
+}
+.order-modal__field input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(251, 242, 227, 0.35);
+  color: var(--color-cream);
+  padding: 6px 2px 10px;
+  transition: border-color var(--transition-base);
+}
+.order-modal__field input::placeholder { color: rgba(251, 242, 227, 0.4); }
+.order-modal__field input:focus { outline: none; border-color: var(--color-gold-light); }
+
+.order-modal__row {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 20px;
+}
+
+.order-modal__select {
+  width: 100%;
+  background: rgba(251, 242, 227, 0.06);
+  border: 1.5px solid var(--color-gold);
+  border-radius: 10px;
+  color: var(--color-cream);
+  padding: 10px 36px 10px 14px;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23C79A4B' stroke-width='2'><path d='M5 7.5 10 12.5 15 7.5'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  transition: border-color var(--transition-base);
+}
+.order-modal__select:focus { outline: none; border-color: var(--color-gold-light); }
+.order-modal__select option { color: var(--color-ink); }
+
+.order-modal__flavors-title {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(251, 242, 227, 0.65);
+  margin-bottom: 12px;
+}
+.order-modal__flavor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 20px;
+  margin-bottom: 24px;
+}
+.flavor-check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+.flavor-check input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.flavor-check__box {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border: 1.5px solid var(--color-gold);
+  border-radius: 4px;
+  position: relative;
+  transition: background var(--transition-base);
+}
+.flavor-check input:checked + .flavor-check__box { background: var(--color-gold); }
+.flavor-check input:checked + .flavor-check__box::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 6px;
+  height: 11px;
+  border: solid var(--color-maroon-dark);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.flavor-check input:focus-visible + .flavor-check__box {
+  outline: 2px solid var(--color-gold-light);
+  outline-offset: 2px;
+}
+
+.order-modal__note {
+  font-size: 13px;
+  color: rgba(251, 242, 227, 0.6);
+  margin-bottom: 18px;
+}
+.order-modal__submit { width: 100%; }
+
+/* =========================================================
    FOOTER
    ========================================================= */
-.site-footer { background: var(--color-maroon-dark); color: rgba(251, 242, 227, 0.85); }
+.site-footer { position: relative; background: var(--color-maroon-dark); color: rgba(251, 242, 227, 0.85); overflow: hidden; }
+.footer__deco {
+  position: absolute;
+  bottom: -30px;
+  right: -30px;
+  width: 260px;
+  opacity: 0.12;
+  pointer-events: none;
+}
 .footer__inner {
+  position: relative;
+  z-index: 1;
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1.2fr 1fr;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
   gap: 40px;
-  padding: 70px 0 50px;
+  padding: 70px 0 60px;
 }
 .footer__brand .logo__text { color: var(--color-cream); }
-.footer__desc { font-size: 13.5px; margin-top: 16px; color: rgba(251, 242, 227, 0.65); }
+.footer__desc { font-size: 13.5px; margin-top: 16px; color: rgba(251, 242, 227, 0.7); max-width: 340px; }
+
+.footer__copyright { margin-top: 28px; }
+.footer__copyright p {
+  font-size: 12.5px;
+  color: rgba(251, 242, 227, 0.5);
+  line-height: 1.6;
+}
 
 .footer__col h4 {
-  font-family: var(--font-heading);
-  font-size: 16px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--color-gold-light);
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 .footer__col ul { display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
 .footer__col a { transition: color var(--transition-base); }
 .footer__col a:hover { color: var(--color-gold-light); }
-.footer__contact li { color: rgba(251, 242, 227, 0.7); }
+.footer__contact { margin-bottom: 20px; }
+.footer__contact li a { color: rgba(251, 242, 227, 0.8); }
 
 .footer__socials { display: flex; gap: 12px; }
 .footer__social-link {
@@ -801,14 +997,6 @@ section { position: relative; }
   border-color: var(--color-gold);
   color: var(--color-maroon-dark);
   transform: translateY(-3px);
-}
-
-.footer__bottom {
-  border-top: 1px solid rgba(251, 242, 227, 0.12);
-  padding: 20px 0;
-  text-align: center;
-  font-size: 13px;
-  color: rgba(251, 242, 227, 0.55);
 }
 
 /* ---------- SCROLL TO TOP ---------- */
@@ -922,6 +1110,11 @@ section { position: relative; }
   .order-card__contact { gap: 24px; }
   .order-card--business .order-card__grid { grid-template-columns: 1fr; gap: 18px; }
   .order-card__deco { width: 120px; opacity: 0.08; }
+
+  .order-modal { padding: 30px 24px; border-radius: 20px; }
+  .order-modal__title { font-size: 22px; }
+  .order-modal__row { grid-template-columns: 1fr; gap: 20px; }
+  .order-modal__flavor-grid { grid-template-columns: 1fr; }
 
   .footer__inner { grid-template-columns: 1fr; padding: 50px 0 30px; gap: 30px; }
 }

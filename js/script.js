@@ -87,14 +87,33 @@ const translations = {
     order_response_note: "Phản hồi trong 24 giờ làm việc.",
     order_btn_submit: "Gửi yêu cầu!",
 
-    footer_brand_desc: "Vị Di Sản mang những công trình biểu tượng của Hà Nội nghìn năm văn hiến vào từng chiếc bánh, kết nối ẩm thực - văn hoá - công nghệ - trải nghiệm.",
-    footer_col1_title: "Vị di sản",
-    footer_col2_title: "Thông tin liên hệ",
-    footer_address: "Địa chỉ: Số 1, Ngõ Thượng Đình, Hà Nội",
-    footer_hotline: "Hotline: (024) 1234 5678",
-    footer_email: "Email: hello@vidisan.vn",
-    footer_col3_title: "Kết nối với chúng tôi",
-    footer_copyright: "© 2026 Vị Di Sản by Nương Bắc. Bảo lưu mọi quyền.",
+    modal_title: "Đặt hàng",
+    label_phone: "Điện thoại",
+    placeholder_phone: "Nhập số điện thoại",
+    label_address: "Địa chỉ",
+    placeholder_address: "Nhập địa chỉ giao hàng",
+    label_product: "Sản phẩm",
+    label_flavors: "Chọn vị bánh yêu thích",
+    label_notes: "Ghi chú",
+    placeholder_notes: "Ghi chú thêm (nếu có)",
+    modal_delivery_note: "Giao nội thành Hà Nội trong 1-2 ngày.",
+    modal_submit: "Xác nhận đặt hàng",
+
+    footer_brand_desc: "Bánh trung thu nghệ thuật, thủ công tại Hà Nội. Quà tặng văn hóa cho thế giới.",
+    footer_copyright: "© 2026 VỊ DI SẢN - Lát cắt ký ức - câu chuyện dân tộc. Bản quyền ý tưởng và sáng tạo sản phẩm thuộc về Công ty TNHH Nương Bắc.",
+
+    footer_nav_title: "Bộ sưu tập",
+    footer_nav_item1: "Hà Nội Trong Tôi",
+    footer_nav_item3: "Trải nghiệm QR",
+    footer_nav_item4: "Sắp ra mắt",
+
+    footer_services_title: "Dịch vụ",
+    footer_service_item1: "Đặt hộp lẻ",
+    footer_service_item2: "Quà tặng B2B",
+    footer_service_item3: "Ngoại giao",
+    footer_service_item4: "Vận chuyển quốc tế",
+
+    footer_contact_title: "Liên hệ",
   },
 
   en: {
@@ -180,14 +199,33 @@ const translations = {
     order_response_note: "We respond within 24 business hours.",
     order_btn_submit: "Submit Request!",
 
-    footer_brand_desc: "Vị Di Sản brings Hanoi's thousand-year-old landmarks into every cake, connecting gastronomy, culture, technology and experience.",
-    footer_col1_title: "Explore",
-    footer_col2_title: "Contact Information",
-    footer_address: "Address: No. 1, Thượng Đình Alley, Hanoi",
-    footer_hotline: "Hotline: (024) 1234 5678",
-    footer_email: "Email: hello@vidisan.vn",
-    footer_col3_title: "Connect With Us",
-    footer_copyright: "© 2026 Vị Di Sản by Nương Bắc. All rights reserved.",
+    modal_title: "Place Your Order",
+    label_phone: "Phone Number",
+    placeholder_phone: "Enter your phone number",
+    label_address: "Address",
+    placeholder_address: "Enter your delivery address",
+    label_product: "Product",
+    label_flavors: "Choose your favorite flavors",
+    label_notes: "Notes",
+    placeholder_notes: "Any additional notes",
+    modal_delivery_note: "Delivered within Hanoi city in 1-2 days.",
+    modal_submit: "Confirm Order",
+
+    footer_brand_desc: "Artisan mooncakes, handcrafted in Hanoi. A cultural gift for the world.",
+    footer_copyright: "© 2026 VỊ DI SẢN - A slice of memory, a story of the nation. Concept and product design owned by Nương Bắc Co., Ltd.",
+
+    footer_nav_title: "Collection",
+    footer_nav_item1: "Hanoi In My Heart",
+    footer_nav_item3: "QR Experience",
+    footer_nav_item4: "Coming Soon",
+
+    footer_services_title: "Services",
+    footer_service_item1: "Order Individually",
+    footer_service_item2: "B2B Gifting",
+    footer_service_item3: "Diplomatic Gifts",
+    footer_service_item4: "International Shipping",
+
+    footer_contact_title: "Contact",
   },
 };
 
@@ -316,5 +354,51 @@ document.addEventListener("DOMContentLoaded", () => {
       // TODO: tích hợp API/gửi email khi có backend xử lý đơn hàng.
     });
   });
+
+  /* ---------- 8. POPUP ĐẶT HÀNG (Modal) ---------- */
+  const orderModalOverlay = document.getElementById("orderModalOverlay");
+  const orderModalClose = document.getElementById("orderModalClose");
+  const orderModalSelect = document.getElementById("modalSanPham");
+  const btnOrderBox4 = document.getElementById("btnOrderBox4");
+  const btnOrderSingle = document.getElementById("btnOrderSingle");
+
+  function openOrderModal(productIndex) {
+    if (orderModalSelect && typeof productIndex === "number") {
+      orderModalSelect.selectedIndex = productIndex;
+    }
+    orderModalOverlay.classList.add("is-active");
+    orderModalOverlay.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeOrderModal() {
+    orderModalOverlay.classList.remove("is-active");
+    orderModalOverlay.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  if (orderModalOverlay && btnOrderBox4 && btnOrderSingle && orderModalClose) {
+    btnOrderBox4.addEventListener("click", () => openOrderModal(0));
+    btnOrderSingle.addEventListener("click", () => openOrderModal(1));
+
+    orderModalClose.addEventListener("click", closeOrderModal);
+
+    // Đóng khi click ra ngoài (trên lớp overlay mờ, không phải bên trong modal)
+    orderModalOverlay.addEventListener("click", (e) => {
+      if (e.target === orderModalOverlay) closeOrderModal();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && orderModalOverlay.classList.contains("is-active")) {
+        closeOrderModal();
+      }
+    });
+
+    // Gửi form trong popup xong thì đóng lại luôn
+    const orderModalForm = document.getElementById("orderModalForm");
+    if (orderModalForm) {
+      orderModalForm.addEventListener("submit", () => closeOrderModal());
+    }
+  }
 
 });
