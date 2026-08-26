@@ -12,6 +12,10 @@ a { text-decoration: none; color: inherit; }
 img { max-width: 100%; display: block; }
 button, input { font-family: inherit; font-size: inherit; color: inherit; }
 button { cursor: pointer; background: none; border: none; }
+/* Reset ở trên (VD img{display:block}) là author stylesheet nên thắng cả
+   [hidden]{display:none} mặc định của trình duyệt -> phần tử có thuộc tính
+   hidden vẫn hiện. Rule này bảo đảm hidden luôn thật sự ẩn ở mọi phần tử. */
+[hidden] { display: none !important; }
 
 :root {
   /* Palette lấy từ bản thiết kế Figma */
@@ -499,12 +503,15 @@ section { position: relative; }
 .products { padding: 90px 0; overflow: hidden; }
 .products__bg {
   position: absolute;
-  top: -80px;
-  right: -140px;
-  width: 480px;
-  max-width: 55%;
-  opacity: 0.1;
-  transform: rotate(8deg);
+  top: 10px;
+  right: -60px;
+  width: 420px;
+  max-width: 50%;
+  height: 640px;
+  object-fit: cover;
+  object-position: bottom;
+  opacity: 0.22;
+  transform: rotate(6deg);
   pointer-events: none;
   z-index: 0;
 }
@@ -588,6 +595,16 @@ section { position: relative; }
   transition: transform var(--transition-base);
 }
 .ar-experience__phone:hover { transform: translateY(-10px) rotate(-1deg); }
+.video-container {
+  width: 340px;
+  aspect-ratio: 9 / 16;
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--color-maroon, #5a1f1f);
+  filter: drop-shadow(0 25px 40px rgba(0, 0, 0, 0.35));
+  transition: transform var(--transition-base);
+}
+.video-container:hover { transform: translateY(-10px) rotate(-1deg); }
 .ar-experience__qr {
   position: absolute;
   bottom: 10%;
@@ -692,6 +709,31 @@ section { position: relative; }
   font-weight: 700;
   color: var(--color-gold-light);
 }
+.order-card__price-group {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.order-card__price-old {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(251, 242, 227, 0.45);
+  text-decoration: line-through;
+}
+
+.order-card__price-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-maroon-dark);
+  background: var(--color-gold-light);
+  padding: 7px 14px;
+  border-radius: 999px;
+  margin: -8px 0 22px;
+}
 
 .order-card__badge {
   display: inline-block;
@@ -776,6 +818,47 @@ section { position: relative; }
 .order-card__deco--business { left: auto; right: -24px; }
 
 /* =========================================================
+   ĐĂNG KÝ AFFILIATE
+   ========================================================= */
+.affiliate {
+  padding: 90px 0;
+  background: linear-gradient(180deg, var(--color-cream-dark) 0%, var(--color-cream) 100%);
+}
+.affiliate__inner {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 60px;
+  align-items: center;
+}
+.affiliate__desc { margin-top: 16px; color: var(--color-ink-soft); line-height: 1.7; }
+.affiliate__benefits {
+  list-style: none;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.affiliate__benefits li {
+  position: relative;
+  padding-left: 28px;
+  color: var(--color-ink-soft);
+  line-height: 1.6;
+}
+.affiliate__benefits li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--color-gold);
+  font-weight: 700;
+}
+.affiliate__form { margin: 0; }
+
+@media (max-width: 900px) {
+  .affiliate__inner { grid-template-columns: 1fr; gap: 40px; }
+}
+
+/* =========================================================
    POPUP ĐẶT HÀNG (Modal)
    ========================================================= */
 .modal-overlay {
@@ -854,6 +937,12 @@ section { position: relative; }
 }
 .order-modal__field input::placeholder { color: rgba(251, 242, 227, 0.4); }
 .order-modal__field input:focus { outline: none; border-color: var(--color-gold-light); }
+.order-modal__field input.order-modal__field--locked {
+  color: var(--color-gold-light);
+  font-weight: 700;
+  cursor: not-allowed;
+  border-color: rgba(251, 242, 227, 0.2);
+}
 
 .order-modal__row {
   display: grid;
@@ -889,45 +978,59 @@ section { position: relative; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px 20px;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
-.flavor-check {
+.flavor-qty {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
-  font-size: 14px;
-  cursor: pointer;
+  padding: 8px 12px;
+  background: rgba(251, 242, 227, 0.06);
+  border: 1px solid rgba(251, 242, 227, 0.18);
+  border-radius: 10px;
 }
-.flavor-check input {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
+.flavor-qty__label { font-size: 13.5px; color: var(--color-cream); }
+.flavor-qty__input {
+  width: 56px;
+  text-align: center;
+  background: rgba(251, 242, 227, 0.08);
+  border: 1px solid var(--color-gold);
+  border-radius: 6px;
+  color: var(--color-gold-light);
+  font-weight: 700;
+  padding: 5px 4px;
 }
-.flavor-check__box {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  border: 1.5px solid var(--color-gold);
-  border-radius: 4px;
-  position: relative;
-  transition: background var(--transition-base);
+.flavor-qty__input:focus { outline: none; border-color: var(--color-gold-light); }
+
+.order-modal__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-top: 14px;
+  margin-bottom: 6px;
+  border-top: 1px solid rgba(251, 242, 227, 0.2);
+  font-size: 14.5px;
+  color: rgba(251, 242, 227, 0.85);
 }
-.flavor-check input:checked + .flavor-check__box { background: var(--color-gold); }
-.flavor-check input:checked + .flavor-check__box::after {
-  content: "";
-  position: absolute;
-  left: 5px;
-  top: 1px;
-  width: 6px;
-  height: 11px;
-  border: solid var(--color-maroon-dark);
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
+.order-modal__total strong {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  color: var(--color-gold-light);
 }
-.flavor-check input:focus-visible + .flavor-check__box {
-  outline: 2px solid var(--color-gold-light);
-  outline-offset: 2px;
+
+.order-modal__price-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-maroon-dark);
+  background: var(--color-gold-light);
+  padding: 7px 14px;
+  border-radius: 999px;
+  margin-bottom: 20px;
 }
 
 .order-modal__note {
@@ -936,6 +1039,239 @@ section { position: relative; }
   margin-bottom: 18px;
 }
 .order-modal__submit { width: 100%; }
+
+.flavor-warning {
+  font-size: 12.5px;
+  color: var(--color-gold-light);
+  margin-top: 10px;
+}
+
+/* ---------- Thông báo thành công (Form Doanh nghiệp) ---------- */
+.order-card__success {
+  text-align: center;
+  padding: 30px 10px;
+}
+.order-card__success-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: var(--color-cream);
+  color: var(--color-maroon-dark);
+  font-size: 26px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.order-card__success-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(251, 242, 227, 0.9);
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+/* ---------- Kết quả đăng ký Affiliate: mã + link + nút copy ---------- */
+.affiliate-result {
+  margin: 24px auto 0;
+  max-width: 460px;
+  text-align: left;
+  background: rgba(0, 0, 0, 0.16);
+  border: 1px solid rgba(228, 199, 132, 0.35);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+.affiliate-result__block + .affiliate-result__block { margin-top: 18px; }
+.affiliate-result__label {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: rgba(251, 242, 227, 0.6);
+  margin-bottom: 6px;
+}
+.affiliate-result__code {
+  font-family: var(--font-heading);
+  font-size: 26px;
+  letter-spacing: 1px;
+  color: var(--color-gold-light);
+}
+.affiliate-result__link-row {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.affiliate-result__link {
+  flex: 1 1 220px;
+  min-width: 0;
+  word-break: break-all;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-cream);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 8px 0;
+}
+.affiliate-result__link:hover { color: var(--color-gold-light); }
+.affiliate-result__copy {
+  flex: 0 0 auto;
+  align-self: center;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-maroon-dark);
+  background: var(--color-gold-light);
+  border: none;
+  border-radius: 999px;
+  padding: 9px 18px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+.affiliate-result__copy:hover { background: var(--color-cream); transform: translateY(-1px); }
+.affiliate-result__copied {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-gold-light);
+}
+.affiliate-result__lookup {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(251, 242, 227, 0.2);
+  font-size: 14px;
+}
+.affiliate-result__lookup a {
+  color: var(--color-gold-light);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.affiliate-result__lookup a:hover { color: var(--color-cream); }
+
+/* ---------- Mời vào nhóm Zalo hỗ trợ Affiliate ---------- */
+.affiliate-zalo {
+  margin: 22px auto 0;
+  max-width: 460px;
+  text-align: center;
+  border-top: 1px solid rgba(251, 242, 227, 0.2);
+  padding-top: 22px;
+}
+.affiliate-zalo__title {
+  font-family: var(--font-heading);
+  font-size: 19px;
+  color: var(--color-gold-light);
+  margin-bottom: 8px;
+}
+.affiliate-zalo__desc {
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(251, 242, 227, 0.8);
+  margin-bottom: 18px;
+}
+.affiliate-zalo__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+/* Ảnh QR nhóm Zalo là ảnh DỌC (đã có sẵn nền xanh + tiêu đề nhóm của Zalo)
+   nên không cần thêm nền trắng/padding, chỉ bo góc cho hợp tổng thể. */
+.affiliate-zalo__qr {
+  width: 170px;
+  height: auto;
+  border-radius: 14px;
+}
+
+/* ---------- Kết quả đặt hàng + chọn ngân hàng thanh toán (Modal) ---------- */
+.order-modal__result { text-align: center; }
+.order-modal__result-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: var(--color-cream);
+  color: var(--color-maroon-dark);
+  font-size: 26px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.order-modal__result-title {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+.order-modal__result-order {
+  font-size: 14px;
+  color: rgba(251, 242, 227, 0.75);
+  margin-bottom: 28px;
+}
+.order-modal__result-order strong { color: var(--color-gold-light); }
+
+.qr-picker { text-align: left; margin-bottom: 24px; }
+
+.qr-picker__warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(199, 154, 75, 0.16);
+  border: 1.5px solid var(--color-gold);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--color-gold-light);
+}
+.qr-picker__warning span:first-child { font-size: 18px; line-height: 1.3; flex-shrink: 0; }
+.qr-picker__warning a { color: inherit; text-decoration: underline; }
+
+.qr-picker__panel {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  background: rgba(251, 242, 227, 0.06);
+  border: 1px solid rgba(251, 242, 227, 0.15);
+  border-radius: 18px;
+  padding: 18px;
+}
+.qr-picker__image-wrap {
+  flex-shrink: 0;
+  width: 132px;
+  height: 132px;
+  background: var(--color-white);
+  border-radius: 12px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.qr-picker__image { width: 100%; height: 100%; object-fit: contain; }
+
+.qr-picker__info { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0; }
+.qr-picker__info > div { display: flex; flex-direction: column; gap: 1px; }
+.qr-picker__info dt {
+  font-size: 11.5px;
+  color: rgba(251, 242, 227, 0.55);
+}
+.qr-picker__info dd {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--color-cream);
+  overflow-wrap: break-word;
+}
+.qr-picker__amount dd {
+  color: var(--color-gold-light);
+  font-size: 17px;
+  font-family: var(--font-heading);
+}
+
+.order-modal__done { width: 100%; }
 
 /* =========================================================
    FOOTER
@@ -1003,7 +1339,7 @@ section { position: relative; }
 .scroll-top {
   position: fixed;
   right: 26px;
-  bottom: 26px;
+  bottom: 100px;
   width: 46px;
   height: 46px;
   border-radius: 50%;
@@ -1097,6 +1433,7 @@ section { position: relative; }
 
   .ar-experience { padding: 70px 0; }
   .ar-experience__phone { width: 240px; }
+  .video-container { width: 240px; }
   .ar-experience__qr { width: 90px; }
 
   .order-card { padding: 26px; }
@@ -1116,6 +1453,9 @@ section { position: relative; }
   .order-modal__row { grid-template-columns: 1fr; gap: 20px; }
   .order-modal__flavor-grid { grid-template-columns: 1fr; }
 
+  .qr-picker__panel { flex-direction: column; text-align: center; }
+  .qr-picker__info > div { align-items: center; }
+
   .footer__inner { grid-template-columns: 1fr; padding: 50px 0 30px; gap: 30px; }
 }
 
@@ -1132,4 +1472,171 @@ section { position: relative; }
   .order-card__price-list li { flex-direction: column; align-items: flex-start; gap: 2px; }
   .order-card__contact { flex-direction: column; gap: 16px; }
   .order-card__deco { display: none; }
+}
+
+/* ---------- CHATBOT TRỢ LÝ ---------- */
+.chatbot {
+  position: fixed;
+  right: 26px;
+  bottom: var(--chatbot-bottom, 26px);
+  z-index: 950;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+}
+
+.chatbot__toggle {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--color-maroon);
+  color: var(--color-gold-light);
+  border: 2px solid rgba(228, 199, 132, 0.5);
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  transition: transform var(--transition-base), background var(--transition-base);
+  flex-shrink: 0;
+}
+.chatbot__toggle:hover { transform: translateY(-4px); background: var(--color-maroon-dark); }
+.chatbot__toggle-icon-close { display: none; }
+.chatbot.is-open .chatbot__toggle-icon-open { display: none; }
+.chatbot.is-open .chatbot__toggle-icon-close { display: inline; }
+
+.chatbot__panel {
+  width: min(360px, calc(100vw - 40px));
+  height: min(520px, var(--chatbot-avail-height, calc(100vh - 140px)));
+  max-height: var(--chatbot-avail-height, calc(100vh - 140px));
+  background: var(--color-maroon);
+  color: var(--color-cream);
+  border-radius: 22px;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(228, 199, 132, 0.25);
+  /* Chặn điện thoại tự "phóng to" (font boosting) chữ bên trong khung chat hẹp. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+/* .chatbot__panel { display: flex } thắng thế mặc định [hidden]{display:none}
+   của trình duyệt (CSS tác giả luôn thắng CSS mặc định) — phải khai báo lại
+   tường minh thì thuộc tính "hidden" mới thực sự ẩn được panel. */
+.chatbot__panel[hidden] { display: none; }
+
+.chatbot__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(251, 242, 227, 0.15);
+  flex-shrink: 0;
+}
+.chatbot__header-info { display: flex; align-items: center; gap: 10px; font-weight: 700; font-family: var(--font-heading); font-size: 15.5px; }
+.chatbot__header-icon { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+.chatbot__close {
+  background: none;
+  border: none;
+  color: var(--color-cream);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity var(--transition-base);
+}
+.chatbot__close:hover { opacity: 1; }
+
+.chatbot__messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chatbot__msg {
+  max-width: 82%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.chatbot__msg--bot {
+  align-self: flex-start;
+  background: rgba(251, 242, 227, 0.1);
+  color: var(--color-cream);
+  border-bottom-left-radius: 4px;
+}
+.chatbot__msg--user {
+  align-self: flex-end;
+  background: var(--color-gold-light);
+  color: var(--color-maroon-dark);
+  font-weight: 600;
+  border-bottom-right-radius: 4px;
+}
+.chatbot__msg--loading { font-style: italic; opacity: 0.7; }
+
+.chatbot__hotline {
+  font-size: 12px;
+  text-align: center;
+  color: rgba(251, 242, 227, 0.7);
+  padding: 0 18px 10px;
+  flex-shrink: 0;
+}
+.chatbot__hotline a { color: var(--color-gold-light); font-weight: 700; }
+
+.chatbot__form {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid rgba(251, 242, 227, 0.15);
+  flex-shrink: 0;
+}
+.chatbot__form input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(251, 242, 227, 0.3);
+  background: rgba(251, 242, 227, 0.08);
+  color: var(--color-cream);
+  /* Tối thiểu 16px để Safari/iOS không tự zoom cả trang khi bấm vào ô nhập. */
+  font-size: 16px;
+}
+.chatbot__form input::placeholder { color: rgba(251, 242, 227, 0.5); }
+.chatbot__form input:focus { outline: none; border-color: var(--color-gold-light); }
+.chatbot__send {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-gold-light);
+  color: var(--color-maroon-dark);
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform var(--transition-base);
+}
+.chatbot__send:hover { transform: scale(1.08); }
+
+@media (max-width: 480px) {
+  .chatbot { right: 12px; bottom: var(--chatbot-bottom, 12px); }
+  .chatbot__toggle { width: 52px; height: 52px; font-size: 21px; }
+  .chatbot__panel {
+    width: calc(100vw - 24px);
+    height: min(75vh, var(--chatbot-avail-height, 560px));
+    max-height: var(--chatbot-avail-height, calc(100dvh - 90px));
+  }
+  .chatbot__header { padding: 14px 16px; }
+  .chatbot__header-info { font-size: 14.5px; }
+  .chatbot__messages { padding: 14px; }
+  .chatbot__msg { font-size: 13.5px; max-width: 88%; }
+  .chatbot__hotline { font-size: 11.5px; padding: 0 14px 10px; }
 }
