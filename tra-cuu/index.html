@@ -1,1 +1,149 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tra cứu hiệu suất Affiliate – Vị Di Sản</title>
+<meta name="description" content="Trang tra cứu minh bạch dành cho đối tác Affiliate của Vị Di Sản: lượt click, đơn hàng giới thiệu và hoa hồng.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="../dau-lat-cat-3.png">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Tai+Heritage+Pro:wght@400;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="tra-cuu.css?v=20260813a">
+</head>
+<body>
+
+<header class="lk-header">
+  <div class="lk-container lk-header__inner">
+    <a href="../index.html" class="lk-logo">
+      <img src="../dau-lat-cat-3.png" alt="" class="lk-logo__stamp">
+      <span class="lk-logo__text">VỊ DI SẢN</span>
+    </a>
+    <a href="../index.html" class="lk-back">← Quay lại trang chủ</a>
+  </div>
+</header>
+
+<main>
+  <!-- ================= KHU VỰC TÌM KIẾM ================= -->
+  <section class="lk-search">
+    <div class="lk-container">
+      <h1 class="lk-search__title">Tra cứu hiệu suất Affiliate</h1>
+      <p class="lk-search__subtitle">Nhập thông tin của bạn để xem số liệu giới thiệu và hoa hồng một cách minh bạch.</p>
+
+      <form class="lk-search__form" id="lookupForm" novalidate>
+        <label class="lk-search__label" for="lookupInput">Số điện thoại hoặc Mã Affiliate</label>
+        <div class="lk-search__row">
+          <input
+            type="text"
+            id="lookupInput"
+            name="lookupInput"
+            class="lk-search__input"
+            placeholder="VD: 0912345678 hoặc VDS10"
+            autocomplete="off"
+            required>
+          <button type="submit" class="lk-btn" id="lookupBtn">
+            <span class="lk-btn__label">Tra cứu ngay</span>
+            <span class="lk-spinner" id="lookupSpinner" hidden aria-hidden="true"></span>
+          </button>
+        </div>
+      </form>
+
+      <p class="lk-error" id="lookupError" hidden role="alert"></p>
+    </div>
+  </section>
+
+  <!-- ================= DASHBOARD KẾT QUẢ ================= -->
+  <section class="lk-result" id="lookupResult" hidden>
+    <div class="lk-container">
+
+      <!-- Thẻ thông tin đối tác -->
+      <div class="lk-partner">
+        <div class="lk-partner__main">
+          <span class="lk-partner__label">Đối tác giới thiệu</span>
+          <h2 class="lk-partner__name" id="partnerName"></h2>
+          <div class="lk-partner__meta">
+            <span class="lk-chip lk-chip--code" id="partnerCode"></span>
+            <span class="lk-chip" id="partnerGroup"></span>
+          </div>
+        </div>
+        <div class="lk-partner__link">
+          <span class="lk-partner__label">Link giới thiệu của bạn</span>
+          <div class="lk-partner__link-row">
+            <a href="#" id="partnerLink" class="lk-partner__link-text" target="_blank" rel="noopener"></a>
+            <button type="button" class="lk-copy" id="partnerCopyBtn">Sao chép</button>
+          </div>
+          <span class="lk-copied" id="partnerCopied" hidden>✓ Đã sao chép!</span>
+        </div>
+      </div>
+
+      <!-- 4 ô số liệu tổng quan -->
+      <div class="lk-stats">
+        <div class="lk-stat">
+          <span class="lk-stat__icon" aria-hidden="true">🖱️</span>
+          <span class="lk-stat__value" id="statClicks">—</span>
+          <span class="lk-stat__label">Lượt click vào link</span>
+          <span class="lk-stat__note" id="statClicksNote" hidden>Chưa bật đếm click</span>
+        </div>
+        <div class="lk-stat">
+          <span class="lk-stat__icon" aria-hidden="true">📦</span>
+          <span class="lk-stat__value" id="statPaidOrders">0</span>
+          <span class="lk-stat__label">Đơn hàng thành công</span>
+          <span class="lk-stat__note" id="statTotalOrders"></span>
+        </div>
+        <div class="lk-stat">
+          <span class="lk-stat__icon" aria-hidden="true">💰</span>
+          <span class="lk-stat__value lk-stat__value--money" id="statEarned">0 đ</span>
+          <span class="lk-stat__label">Hoa hồng đã đạt</span>
+          <span class="lk-stat__note">Từ các đơn đã thanh toán</span>
+        </div>
+        <div class="lk-stat">
+          <span class="lk-stat__icon" aria-hidden="true">⏳</span>
+          <span class="lk-stat__value lk-stat__value--money" id="statBalance">0 đ</span>
+          <span class="lk-stat__label">Hoa hồng chờ chi trả</span>
+          <span class="lk-stat__note" id="statPayoutStatus"></span>
+        </div>
+      </div>
+
+      <!-- Bảng chi tiết đơn hàng -->
+      <div class="lk-orders">
+        <h3 class="lk-orders__title">Lịch sử đơn hàng giới thiệu</h3>
+
+        <div class="lk-table-wrap">
+          <table class="lk-table">
+            <thead>
+              <tr>
+                <th>Mã đơn</th>
+                <th>Khách hàng</th>
+                <th>Sản phẩm</th>
+                <th class="lk-num">Giá trị đơn</th>
+                <th class="lk-num">Tỉ lệ</th>
+                <th class="lk-num">Hoa hồng</th>
+                <th>Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody id="ordersBody"></tbody>
+          </table>
+        </div>
+
+        <p class="lk-empty" id="ordersEmpty" hidden>Chưa có đơn hàng nào được ghi nhận qua link giới thiệu của bạn. Hãy chia sẻ link để bắt đầu nhận hoa hồng nhé!</p>
+
+        <p class="lk-note" id="ratesNote"></p>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="lk-footer">
+  <div class="lk-container">
+    <p>Số liệu được cập nhật tự động từ hệ thống đơn hàng của Vị Di Sản.</p>
+    <p>Cần hỗ trợ? Liên hệ hotline <a href="tel:0915080988">0915 080 988</a></p>
+  </div>
+</footer>
+
+<script src="tra-cuu.js?v=20260813a"></script>
+</body>
+</html>
