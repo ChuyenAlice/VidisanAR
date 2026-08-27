@@ -28,9 +28,16 @@
 
     <nav class="nav" id="mainNav">
       <ul class="nav__list">
-        <li><a href="#san-pham" class="nav__link" data-i18n="nav_collection">Bộ sưu tập</a></li>
+        <!-- Thứ tự các mục PHẢI khớp thứ tự section thật trên trang (xem
+             các thẻ <section id="..."> bên dưới): bon-cau-chuyen ->
+             trai-nghiem-ar -> san-pham -> dat-hop-qua -> doanh-nghiep.
+             Trước đây "Bộ sưu tập" (san-pham) đứng đầu menu nhưng section
+             của nó lại nằm SAU "Bốn câu chuyện" và "Trải nghiệm AR" trong
+             trang -> bấm lần lượt từ trái sang phải bị nhảy lên xuống
+             ngược chiều, gây khó chịu. -->
         <li><a href="#bon-cau-chuyen" class="nav__link" data-i18n="nav_stories">Bốn câu chuyện</a></li>
         <li><a href="#trai-nghiem-ar" class="nav__link" data-i18n="nav_ar">Trải nghiệm AR</a></li>
+        <li><a href="#san-pham" class="nav__link" data-i18n="nav_collection">Bộ sưu tập</a></li>
         <li><a href="#dat-hop-qua" class="nav__link" data-i18n="nav_order">Đặt hộp quà</a></li>
         <li><a href="#doanh-nghiep" class="nav__link" data-i18n="nav_business">Doanh nghiệp</a></li>
       </ul>
@@ -366,20 +373,20 @@
 
               <div class="order-card__grid">
                 <div class="order-card__field order-card__field--underline">
-                  <label for="hoTen" data-i18n="label_fullname">Họ và tên</label>
-                  <input type="text" id="hoTen" name="hoTen" placeholder="Nhập họ tên của bạn" data-i18n-placeholder="placeholder_fullname" required>
+                  <label for="hoTen" class="label--required" data-i18n="label_fullname">Họ và tên</label>
+                  <input type="text" id="hoTen" name="hoTen" placeholder="Nhập họ tên của bạn" data-i18n-placeholder="placeholder_fullname" maxlength="80" required>
                 </div>
                 <div class="order-card__field order-card__field--underline">
                   <label for="donVi" data-i18n="label_company">Đơn vị</label>
-                  <input type="text" id="donVi" name="donVi" placeholder="Nhập tên đơn vị" data-i18n-placeholder="placeholder_company">
+                  <input type="text" id="donVi" name="donVi" placeholder="Nhập tên đơn vị" data-i18n-placeholder="placeholder_company" maxlength="120">
                 </div>
                 <div class="order-card__field order-card__field--underline">
-                  <label for="soDienThoaiDN" data-i18n="label_phone_required">Số điện thoại *</label>
-                  <input type="tel" id="soDienThoaiDN" name="soDienThoaiDN" placeholder="Nhập số điện thoại" data-i18n-placeholder="placeholder_phone" required>
+                  <label for="soDienThoaiDN" class="label--required" data-i18n="label_phone_required">Số điện thoại</label>
+                  <input type="tel" id="soDienThoaiDN" name="soDienThoaiDN" placeholder="Nhập số điện thoại" data-i18n-placeholder="placeholder_phone" inputmode="tel" maxlength="15" required>
                 </div>
                 <div class="order-card__field order-card__field--underline">
                   <label for="email" data-i18n="label_email">Email</label>
-                  <input type="email" id="email" name="email" placeholder="Nhập email của bạn" data-i18n-placeholder="placeholder_email">
+                  <input type="email" id="email" name="email" placeholder="Nhập email của bạn" data-i18n-placeholder="placeholder_email" maxlength="120">
                 </div>
                 <div class="order-card__field order-card__field--underline">
                   <label for="soLuongDat" data-i18n="label_qty_order">Số lượng</label>
@@ -389,7 +396,7 @@
 
               <div class="order-card__field order-card__field--underline order-card__field--full">
                 <label for="yeuCau" data-i18n="label_request">Yêu cầu cụ thể</label>
-                <input type="text" id="yeuCau" name="yeuCau" placeholder="Mô tả yêu cầu của bạn" data-i18n-placeholder="placeholder_request">
+                <input type="text" id="yeuCau" name="yeuCau" placeholder="Mô tả yêu cầu của bạn" data-i18n-placeholder="placeholder_request" maxlength="500">
               </div>
 
               <div class="order-card__footer-row">
@@ -431,24 +438,24 @@
         <div class="order-card__body">
           <div class="order-card__form-fields" id="affiliateFormFields">
             <div class="order-card__field order-card__field--underline">
-              <label for="affHoTen" data-i18n="label_fullname">Họ và tên</label>
-              <input type="text" id="affHoTen" name="affHoTen" placeholder="Nhập họ tên của bạn" data-i18n-placeholder="placeholder_fullname" required>
+              <label for="affHoTen" class="label--required" data-i18n="label_fullname">Họ và tên</label>
+              <input type="text" id="affHoTen" name="affHoTen" placeholder="Nhập họ tên của bạn" data-i18n-placeholder="placeholder_fullname" maxlength="80" required>
             </div>
             <div class="order-card__field order-card__field--underline">
-              <label for="affSoDienThoai" data-i18n="label_phone_required">Số điện thoại *</label>
-              <input type="tel" id="affSoDienThoai" name="affSoDienThoai" placeholder="Nhập số điện thoại" data-i18n-placeholder="placeholder_phone" required>
+              <label for="affSoDienThoai" class="label--required" data-i18n="label_phone_required">Số điện thoại</label>
+              <input type="tel" id="affSoDienThoai" name="affSoDienThoai" placeholder="Nhập số điện thoại" data-i18n-placeholder="placeholder_phone" inputmode="tel" maxlength="15" required>
             </div>
             <div class="order-card__field order-card__field--underline">
-              <label for="affEmail" data-i18n="label_email">Email</label>
-              <input type="email" id="affEmail" name="affEmail" placeholder="Nhập email của bạn" data-i18n-placeholder="placeholder_email" required>
+              <label for="affEmail" class="label--required" data-i18n="label_email">Email</label>
+              <input type="email" id="affEmail" name="affEmail" placeholder="Nhập email của bạn" data-i18n-placeholder="placeholder_email" maxlength="120" required>
             </div>
             <div class="order-card__field order-card__field--underline">
-              <label for="affNganHang" data-i18n="label_bank">Ngân hàng</label>
-              <input type="text" id="affNganHang" name="affNganHang" placeholder="VD: Vietcombank" data-i18n-placeholder="placeholder_bank" required>
+              <label for="affNganHang" class="label--required" data-i18n="label_bank">Ngân hàng</label>
+              <input type="text" id="affNganHang" name="affNganHang" placeholder="VD: Vietcombank" data-i18n-placeholder="placeholder_bank" maxlength="60" required>
             </div>
             <div class="order-card__field order-card__field--underline">
-              <label for="affSoTaiKhoan" data-i18n="label_bank_account">Số tài khoản</label>
-              <input type="text" id="affSoTaiKhoan" name="affSoTaiKhoan" placeholder="Nhập số tài khoản nhận hoa hồng" data-i18n-placeholder="placeholder_bank_account" required>
+              <label for="affSoTaiKhoan" class="label--required" data-i18n="label_bank_account">Số tài khoản</label>
+              <input type="text" id="affSoTaiKhoan" name="affSoTaiKhoan" placeholder="Nhập số tài khoản nhận hoa hồng" data-i18n-placeholder="placeholder_bank_account" inputmode="numeric" maxlength="30" required>
             </div>
 
             <div class="order-card__footer-row">
@@ -511,23 +518,23 @@
 
         <div class="order-modal__fields" id="modalFormFields">
           <div class="order-modal__field">
-            <label for="modalHoTen" data-i18n="label_fullname">Họ và tên</label>
-            <input type="text" id="modalHoTen" name="hoTen" placeholder="Nhập họ tên của bạn" data-i18n-placeholder="placeholder_fullname" required>
+            <label for="modalHoTen" class="label--required" data-i18n="label_fullname">Họ và tên</label>
+            <input type="text" id="modalHoTen" name="hoTen" placeholder="Nhập họ tên của bạn" data-i18n-placeholder="placeholder_fullname" maxlength="80" required>
           </div>
 
           <div class="order-modal__field">
-            <label for="modalDienThoai" data-i18n="label_phone">Điện thoại</label>
-            <input type="tel" id="modalDienThoai" name="dienThoai" placeholder="Nhập số điện thoại" data-i18n-placeholder="placeholder_phone" required>
+            <label for="modalDienThoai" class="label--required" data-i18n="label_phone">Điện thoại</label>
+            <input type="tel" id="modalDienThoai" name="dienThoai" placeholder="Nhập số điện thoại" data-i18n-placeholder="placeholder_phone" inputmode="tel" maxlength="15" required>
           </div>
 
           <div class="order-modal__field">
-            <label for="modalEmail" data-i18n="label_email">Email</label>
-            <input type="email" id="modalEmail" name="email" placeholder="Nhập email của bạn" data-i18n-placeholder="placeholder_email" required>
+            <label for="modalEmail" class="label--required" data-i18n="label_email">Email</label>
+            <input type="email" id="modalEmail" name="email" placeholder="Nhập email của bạn" data-i18n-placeholder="placeholder_email" maxlength="120" required>
           </div>
 
           <div class="order-modal__field">
-            <label for="modalDiaChi" data-i18n="label_address">Địa chỉ</label>
-            <input type="text" id="modalDiaChi" name="diaChi" placeholder="Nhập địa chỉ giao hàng" data-i18n-placeholder="placeholder_address" required>
+            <label for="modalDiaChi" class="label--required" data-i18n="label_address">Địa chỉ</label>
+            <input type="text" id="modalDiaChi" name="diaChi" placeholder="Nhập địa chỉ giao hàng" data-i18n-placeholder="placeholder_address" maxlength="200" required>
           </div>
 
           <div class="order-modal__row">
@@ -576,7 +583,7 @@
 
           <div class="order-modal__field">
             <label for="modalGhiChu" data-i18n="label_notes">Ghi chú</label>
-            <input type="text" id="modalGhiChu" name="ghiChu" placeholder="Ghi chú thêm (nếu có)" data-i18n-placeholder="placeholder_notes">
+            <input type="text" id="modalGhiChu" name="ghiChu" placeholder="Ghi chú thêm (nếu có)" data-i18n-placeholder="placeholder_notes" maxlength="300">
           </div>
 
           <p class="order-modal__note" data-i18n="modal_delivery_note">Giao nội thành Hà Nội trong 1-2 ngày.</p>
