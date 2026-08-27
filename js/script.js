@@ -136,7 +136,7 @@ const translations = {
     placeholder_notes: "Ghi chú thêm (nếu có)",
     modal_delivery_note: "Giao nội thành Hà Nội trong 1-2 ngày.",
     modal_submit: "Xác nhận đặt hàng",
-    label_phone_required: "Số điện thoại *",
+    label_phone_required: "Số điện thoại",
 
     payment_success_title: "Đặt hàng thành công!",
     payment_order_label: "Mã đơn hàng:",
@@ -297,7 +297,7 @@ const translations = {
     placeholder_notes: "Any additional notes",
     modal_delivery_note: "Delivered within Hanoi city in 1-2 days.",
     modal_submit: "Confirm Order",
-    label_phone_required: "Phone Number *",
+    label_phone_required: "Phone Number",
 
     payment_success_title: "Order placed successfully!",
     payment_order_label: "Order code:",
@@ -795,6 +795,59 @@ document.addEventListener("DOMContentLoaded", () => {
     return result;
   }
 
+  /* ---------- VALIDATE DỮ LIỆU NHẬP ----------
+     Kiểm tra ĐỊNH DẠNG, không chỉ "có nhập hay không" — trước đây cả 3
+     form (Doanh nghiệp, Đặt hàng, Affiliate) chỉ kiểm tra rỗng/không rỗng,
+     nên gõ "oooooooooi" làm tên hay "000000000999" làm SĐT vẫn lọt qua.
+
+     Đây chỉ là hàng rào ĐẦU TIÊN cho trải nghiệm người dùng (báo lỗi ngay,
+     khỏi chờ mạng) — hàng rào THẬT nằm ở worker.js, vì ai gọi thẳng API
+     bỏ qua trình duyệt thì kiểm tra ở đây vô tác dụng. Logic 2 bên phải
+     khớp nhau, nên sửa quy tắc ở 1 bên thì nhớ sửa bên kia. */
+  function isValidVnPhone(phone) {
+    const digits = String(phone || "").replace(/\D/g, "");
+    return /^(0|84)\d{8,10}$/.test(digits);
+  }
+  function isValidEmailFormat(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email || "").trim());
+  }
+  function isValidPersonNameFormat(name) {
+    const trimmed = String(name || "").trim();
+    return trimmed.length >= 2 && trimmed.length <= 80 && /^[\p{L}\s.'-]+$/u.test(trimmed);
+  }
+  function isValidBankNameFormat(name) {
+    const trimmed = String(name || "").trim();
+    return trimmed.length >= 2 && trimmed.length <= 60 && /^[\p{L}0-9\s.'-]+$/u.test(trimmed);
+  }
+  function isValidBankAccountFormat(acc) {
+    const trimmed = String(acc || "").trim();
+    return trimmed.length >= 4 && trimmed.length <= 30 && /^[0-9\s-]+$/.test(trimmed);
+  }
+
+  const VALIDATION_MESSAGES = {
+    vi: {
+      name: "Họ tên không hợp lệ. Vui lòng chỉ nhập chữ cái, 2-80 ký tự.",
+      phone: "Số điện thoại không hợp lệ. Vui lòng kiểm tra lại.",
+      email: "Email không hợp lệ. Vui lòng kiểm tra lại.",
+      address: "Vui lòng nhập địa chỉ giao hàng.",
+      bank: "Tên ngân hàng không hợp lệ. Vui lòng kiểm tra lại.",
+      bankAccount: "Số tài khoản không hợp lệ. Vui lòng chỉ nhập số.",
+    },
+    en: {
+      name: "Full name is invalid. Please use letters only, 2-80 characters.",
+      phone: "Phone number is invalid. Please check and try again.",
+      email: "Email is invalid. Please check and try again.",
+      address: "Please enter a delivery address.",
+      bank: "Bank name is invalid. Please check and try again.",
+      bankAccount: "Account number is invalid. Please enter digits only.",
+    },
+  };
+  // Lấy đúng câu báo lỗi theo ngôn ngữ khách đang xem — trước đây mọi
+  // alert() đều gõ cứng tiếng Việt nên khách xem bản EN vẫn nhận lỗi VI.
+  function vmsg(key) {
+    return VALIDATION_MESSAGES[currentLang === "en" ? "en" : "vi"][key];
+  }
+
   // Gửi đơn hàng lên backend, trả về { order_id, total_amount, ... } khi thành công.
   async function submitOrder(payload) {
     const res = await fetch(API_ENDPOINT, {
@@ -829,12 +882,14 @@ document.addEventListener("DOMContentLoaded", () => {
         soLuong: formDoanhNghiep.soLuongDat.value.trim(),
         yeuCau: formDoanhNghiep.yeuCau.value.trim(),
         affiliateCode: getAffiliateCode(),
+        lang: currentLang,
       };
 
-      if (!payload.hoTen || !payload.soDienThoai) {
-        alert("Vui lòng nhập Họ tên và Số điện thoại.");
-        return;
-      }
+      if (!isValidPersonNameFormat(payload.hoTen)) { alert(vmsg("name")); formDoanhNghiep.hoTen.focus(); return; }
+      if (!isValidVnPhone(payload.soDienThoai)) { alert(vmsg("phone")); formDoanhNghiep.soDienThoaiDN.focus(); return; }
+      // Email là trường tuỳ chọn ở form Doanh nghiệp — chỉ kiểm tra định
+      // dạng khi khách CÓ điền, không bắt buộc phải điền.
+      if (payload.email && !isValidEmailFormat(payload.email)) { alert(vmsg("email")); formDoanhNghiep.email.focus(); return; }
 
       submitBtn.disabled = true;
       try {
@@ -889,15 +944,16 @@ document.addEventListener("DOMContentLoaded", () => {
         ...collectFlavorQuantities(),
         ghiChu: orderModalFormEl.ghiChu.value.trim(),
         affiliateCode: getAffiliateCode(),
+        lang: currentLang,
       };
 
-      if (!payload.hoTen || !payload.soDienThoai || !payload.email || !payload.diaChi) {
-        alert("Vui lòng nhập đủ Họ tên, Điện thoại, Email và Địa chỉ giao hàng.");
-        return;
-      }
+      if (!isValidPersonNameFormat(payload.hoTen)) { alert(vmsg("name")); orderModalFormEl.hoTen.focus(); return; }
+      if (!isValidVnPhone(payload.soDienThoai)) { alert(vmsg("phone")); orderModalFormEl.dienThoai.focus(); return; }
+      if (!isValidEmailFormat(payload.email)) { alert(vmsg("email")); orderModalFormEl.email.focus(); return; }
+      if (!payload.diaChi) { alert(vmsg("address")); orderModalFormEl.diaChi.focus(); return; }
 
       if (!payload.soLuong || parseInt(payload.soLuong, 10) < 1) {
-        alert("Vui lòng nhập Số lượng hợp lệ (tối thiểu 1).");
+        alert(currentLang === "en" ? "Please enter a valid quantity (minimum 1)." : "Vui lòng nhập Số lượng hợp lệ (tối thiểu 1).");
         return;
       }
 
@@ -1007,12 +1063,14 @@ document.addEventListener("DOMContentLoaded", () => {
         email: affiliateRegisterForm.affEmail.value.trim(),
         nganHang: affiliateRegisterForm.affNganHang.value.trim(),
         soTaiKhoan: affiliateRegisterForm.affSoTaiKhoan.value.trim(),
+        lang: currentLang,
       };
 
-      if (!payload.hoTen || !payload.soDienThoai || !payload.email || !payload.nganHang || !payload.soTaiKhoan) {
-        alert("Vui lòng nhập đủ Họ tên, Số điện thoại, Email, Ngân hàng và Số tài khoản.");
-        return;
-      }
+      if (!isValidPersonNameFormat(payload.hoTen)) { alert(vmsg("name")); affiliateRegisterForm.affHoTen.focus(); return; }
+      if (!isValidVnPhone(payload.soDienThoai)) { alert(vmsg("phone")); affiliateRegisterForm.affSoDienThoai.focus(); return; }
+      if (!isValidEmailFormat(payload.email)) { alert(vmsg("email")); affiliateRegisterForm.affEmail.focus(); return; }
+      if (!isValidBankNameFormat(payload.nganHang)) { alert(vmsg("bank")); affiliateRegisterForm.affNganHang.focus(); return; }
+      if (!isValidBankAccountFormat(payload.soTaiKhoan)) { alert(vmsg("bankAccount")); affiliateRegisterForm.affSoTaiKhoan.focus(); return; }
 
       submitBtn.disabled = true;
       try {
