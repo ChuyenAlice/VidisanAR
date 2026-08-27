@@ -200,14 +200,14 @@
         if (!result.ok || result.data.status !== "success") {
           showError(
             result.data.message ||
-            "Không tra cứu được. Vui lòng thử lại sau ít phút hoặc liên hệ hotline 0915 080 988."
+            "Không tra cứu được. Vui lòng thử lại sau ít phút. Nếu vẫn lỗi, gọi hỗ trợ kỹ thuật 0975 817 705 (Trần Thị Chuyền)."
           );
           return;
         }
         renderResult(result.data);
       })
       .catch(function () {
-        showError("Không kết nối được máy chủ. Vui lòng kiểm tra mạng rồi thử lại nhé.");
+        showError("Không kết nối được máy chủ. Vui lòng kiểm tra mạng rồi thử lại. Nếu mạng vẫn tốt mà không vào được, gọi hỗ trợ kỹ thuật 0975 817 705 (Trần Thị Chuyền).");
       })
       .finally(function () {
         setLoading(false);

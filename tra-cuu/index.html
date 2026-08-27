@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Tai+Heritage+Pro:wght@400;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="/tra-cuu/tra-cuu.css?v=20260813b">
+<link rel="stylesheet" href="/tra-cuu/tra-cuu.css?v=20260827a">
 </head>
 <body>
 
@@ -141,10 +141,25 @@
 <footer class="lk-footer">
   <div class="lk-container">
     <p>Số liệu được cập nhật tự động từ hệ thống đơn hàng của Vị Di Sản.</p>
-    <p>Cần hỗ trợ? Liên hệ hotline <a href="tel:0915080988">0915 080 988</a></p>
+
+    <!-- Tách hai đầu mối để đối tác gọi đúng người ngay lần đầu: chuyện tiền
+         nong và đơn hàng thì gọi hotline, còn trang lỗi hay số liệu sai thì
+         gọi người phụ trách kỹ thuật. -->
+    <div class="lk-contacts">
+      <div class="lk-contact">
+        <span class="lk-contact__what">Đơn hàng &amp; hoa hồng</span>
+        <a href="tel:0915080988" class="lk-contact__num">0915 080 988</a>
+        <span class="lk-contact__who">Hotline Vị Di Sản</span>
+      </div>
+      <div class="lk-contact">
+        <span class="lk-contact__what">Trang lỗi, không xem được số liệu</span>
+        <a href="tel:0975817705" class="lk-contact__num">0975 817 705</a>
+        <span class="lk-contact__who">Trần Thị Chuyền — Phụ trách kỹ thuật website</span>
+      </div>
+    </div>
   </div>
 </footer>
 
-<script src="/tra-cuu/tra-cuu.js?v=20260813b"></script>
+<script src="/tra-cuu/tra-cuu.js?v=20260827a"></script>
 </body>
 </html>
