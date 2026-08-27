@@ -735,6 +735,124 @@ section { position: relative; }
   margin: -8px 0 22px;
 }
 
+/* Giá chưa gồm phí vận chuyển — nói ngay cạnh bảng giá để khách không bất
+   ngờ lúc nhận mail báo cước. Cố ý KHÔNG tô nổi bật: đây là thông tin cần
+   biết, không phải khuyến mãi cần chào mời. */
+.order-card__ship-note {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--color-ink-soft);
+  margin: -14px 0 22px;
+  max-width: 46ch;
+}
+
+.order-modal__note--ship {
+  margin-top: 4px;
+  opacity: 0.9;
+}
+
+/* ---------- KHUYẾN MÃI 2/9 + ĐỒNG HỒ ĐẾM NGƯỢC ---------- */
+.promo {
+  background: linear-gradient(135deg, var(--color-maroon-dark), var(--color-maroon));
+  color: var(--color-cream);
+  border: 1px solid var(--color-gold);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  margin: 0 0 18px;
+}
+
+.promo__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.promo__tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-maroon-dark);
+  background: var(--color-gold-light);
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.promo__title {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.promo__desc {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: rgba(251, 242, 227, 0.88);
+  margin-bottom: 12px;
+}
+
+.promo__clock {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 12px;
+  border-top: 1px solid rgba(228, 199, 132, 0.32);
+}
+
+.promo__ends {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-gold-light);
+}
+
+.promo__units { display: flex; align-items: center; gap: 6px; }
+
+.promo__unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 46px;
+  background: rgba(251, 242, 227, 0.1);
+  border: 1px solid rgba(228, 199, 132, 0.28);
+  border-radius: 8px;
+  padding: 5px 6px 4px;
+}
+
+.promo__unit b {
+  font-family: var(--font-heading);
+  font-size: 21px;
+  line-height: 1;
+  /* Chữ số cùng bề rộng để đồng hồ không nhảy ngang mỗi giây */
+  font-variant-numeric: tabular-nums;
+}
+
+.promo__unit span {
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(251, 242, 227, 0.7);
+  margin-top: 2px;
+}
+
+.promo__sep {
+  font-size: 16px;
+  font-weight: 700;
+  color: rgba(228, 199, 132, 0.55);
+  padding-bottom: 12px;
+}
+
+@media (max-width: 420px) {
+  .promo__unit { min-width: 40px; }
+  .promo__unit b { font-size: 18px; }
+  .promo__sep { font-size: 14px; }
+}
+
 .order-card__badge {
   display: inline-block;
   background: var(--color-cream);
