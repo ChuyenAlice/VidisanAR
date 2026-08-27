@@ -214,12 +214,25 @@
       });
   }
 
+  // Số điện thoại VN sau khi bỏ ký tự không phải số: 9-11 chữ số, bắt đầu
+  // bằng 0 hoặc 84. Chặn ở đây trước khi gọi API — trước đó gõ được chuỗi
+  // dài tuỳ ý (VD 25 chữ số) vẫn cứ gửi đi, chỉ nhận "not_found" chung
+  // chung chứ không báo rõ là sai định dạng.
+  function isValidVnPhone(phone) {
+    return /^(0|84)\d{8,10}$/.test(phone);
+  }
+
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var phone = input.value.replace(/\D/g, "");
 
     if (!phone) {
       showError("Vui lòng nhập số điện thoại bạn đã dùng khi đăng ký Affiliate.");
+      input.focus();
+      return;
+    }
+    if (!isValidVnPhone(phone)) {
+      showError("Số điện thoại không hợp lệ. Vui lòng kiểm tra lại.");
       input.focus();
       return;
     }
