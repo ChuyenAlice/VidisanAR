@@ -1039,6 +1039,17 @@ section { position: relative; }
   padding-right: 30px;
 }
 
+/* Dấu * cho ô bắt buộc — 1 rule dùng chung cho mọi form (đặt hàng, đăng
+   ký affiliate, popup đặt hàng) thay vì gõ cứng " *" vào từng chuỗi dịch,
+   để không bao giờ có ô required mà quên đánh dấu (đã xảy ra: "Họ và tên"
+   required nhưng chỉ "Số điện thoại" có dấu *). Thêm class này vào field
+   nào có required thì tự động có dấu *, không phải sửa file dịch. */
+.label--required::after {
+  content: " *";
+  color: var(--color-gold-light);
+  font-weight: 700;
+}
+
 .order-modal__field { margin-bottom: 20px; }
 .order-modal__field label {
   display: block;
