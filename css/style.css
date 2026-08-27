@@ -736,12 +736,15 @@ section { position: relative; }
 }
 
 /* Giá chưa gồm phí vận chuyển — nói ngay cạnh bảng giá để khách không bất
-   ngờ lúc nhận mail báo cước. Cố ý KHÔNG tô nổi bật: đây là thông tin cần
-   biết, không phải khuyến mãi cần chào mời. */
+   ngờ lúc nhận mail báo cước.
+
+   Thẻ "Khách lẻ" có nền đỏ burgundy nên chữ phải sáng. Dùng màu kem ở độ
+   đục cao (gần như trắng) thay vì trắng tinh, để không bị lạc tông giữa
+   các dòng chữ kem khác trên cùng thẻ. */
 .order-card__ship-note {
-  font-size: 12.5px;
-  line-height: 1.55;
-  color: var(--color-ink-soft);
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(251, 242, 227, 0.92);
   margin: -14px 0 22px;
   max-width: 46ch;
 }
