@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=The+Nautigal:wght@400;700&family=Quicksand:wght@400;500;600;700&family=Tai+Heritage+Pro:wght@400;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/style.css?v=20260826a">
+<link rel="stylesheet" href="css/style.css?v=20260826b">
 </head>
 <body>
 
@@ -196,8 +196,11 @@
 
       <div class="ar-experience__media reveal">
         <div class="video-container">
-          <video autoplay muted loop playsinline poster="Mockup-Dien-Thoai.png" class="ar-video" style="width: 100%; height: 100%; object-fit: cover; border-radius: 24px;">
-            <source src="1WUpukiCvT38Qf9kVdSitAcbb1y9nuvxCF1YPntczrUzClnNFZwX0G19Yl35RLmWgvW.mp4" type="video/mp4">
+          <!-- Video quay màn hình trải nghiệm AR. Ảnh poster hiện ngay khi
+               trang vừa tải, video thay chỗ khi tải xong — nên khách không
+               nhìn thấy khung đen lúc chờ. -->
+          <video autoplay muted loop playsinline preload="metadata" poster="Mockup-Dien-Thoai.png" class="ar-video" style="width: 100%; height: 100%; object-fit: cover; border-radius: 24px;">
+            <source src="20260807-190048.mp4" type="video/mp4">
           </video>
         </div>
         <img src="Ma-QR.png" alt="Quét mã QR" class="ar-experience__qr">
@@ -718,6 +721,6 @@
   </button>
 </div>
 
-<script src="js/script.js?v=20260826a"></script>
+<script src="js/script.js?v=20260826b"></script>
 </body>
 </html>
