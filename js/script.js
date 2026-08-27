@@ -66,9 +66,18 @@ const translations = {
     order_price_tuyenchon_old: "1.079.000 đ",
     order_price_tuyenchon_value: "999.000 đ / hộp",
     order_price_single_label: "Bánh lẻ",
-    order_price_single_old: "172.000 đ",
-    order_price_single_value: "159.000 đ / chiếc",
+    order_price_single_old: "159.000 đ",
+    order_price_single_value: "99.000 đ / chiếc",
     order_price_badge: "🎁 Mức giá ưu đãi độc quyền đặt hàng trực tuyến trên website (Đã bao gồm VAT)",
+    order_shipping_note: "🚚 Giá trên chưa gồm phí vận chuyển. Nương Bắc sẽ tra cước sau khi đóng gói và báo cho bạn qua email, phí này thanh toán khi nhận hàng.",
+    promo_title: "Ưu đãi mừng Quốc khánh 2/9",
+    promo_desc: "Bánh lẻ chỉ còn 99.000 đ / chiếc — áp dụng tới hết ngày 02/09.",
+    promo_tag: "Ưu đãi 2/9",
+    promo_ends: "Kết thúc sau",
+    promo_d: "Ngày",
+    promo_h: "Giờ",
+    promo_m: "Phút",
+    promo_s: "Giây",
     order_btn_box4: "Đặt hộp quà",
     order_btn_single: "Mua Bánh lẻ",
     chatbot_title: "Trợ lý Vị Di Sản",
@@ -218,9 +227,18 @@ const translations = {
     order_price_tuyenchon_old: "1,079,000 VND",
     order_price_tuyenchon_value: "999,000 VND / box",
     order_price_single_label: "Single Cake",
-    order_price_single_old: "172,000 VND",
-    order_price_single_value: "159,000 VND / cake",
+    order_price_single_old: "159,000 VND",
+    order_price_single_value: "99,000 VND / cake",
     order_price_badge: "🎁 Exclusive online pricing — website orders only (VAT included)",
+    order_shipping_note: "🚚 Prices exclude shipping. We will calculate the fee once your order is packed, email it to you, and collect it on delivery.",
+    promo_title: "National Day offer",
+    promo_desc: "Single cakes are 99,000 VND each — until end of 2 September.",
+    promo_tag: "2/9 offer",
+    promo_ends: "Ends in",
+    promo_d: "Days",
+    promo_h: "Hrs",
+    promo_m: "Min",
+    promo_s: "Sec",
     order_btn_box4: "Order a Gift Box",
     order_btn_single: "Buy a Single Cake",
     chatbot_title: "Vị Di Sản Assistant",
@@ -322,6 +340,31 @@ const PRICE_TABLE = {
   "Bánh lẻ": 159000,
 };
 
+/* ---------- KHUYẾN MÃI TRƯỚC LỄ 2/9 ----------
+   Bánh lẻ còn 99.000đ tới hết ngày 02/09, sau đó tự về 159.000đ. Hết hạn
+   là trang tự đổi lại giá và ẩn đồng hồ, không ai phải vào sửa tay.
+
+   Mốc thời gian ghi kèm múi giờ +07:00 để máy khách đặt lệch múi giờ vẫn
+   đếm về đúng nửa đêm giờ Việt Nam.
+
+   Bảng này CHỈ để hiển thị. Số tiền thật của đơn hàng do Worker tính lại
+   từ tên sản phẩm + số lượng (xem getUnitPrice trong worker.js), nên máy
+   khách chỉnh đồng hồ hay sửa giá trong trình duyệt đều không ăn thua.
+   Đổi đợt khuyến mãi thì sửa cả 2 hằng số cùng tên bên worker.js. */
+const PROMO_END_AT = Date.parse("2026-09-02T23:59:59+07:00");
+const PROMO_PRICE_TABLE = {
+  "Bánh lẻ": 99000,
+};
+
+function isPromoActive(now) {
+  return (now === undefined ? Date.now() : now) <= PROMO_END_AT;
+}
+
+function getUnitPrice(sanPham) {
+  if (isPromoActive() && PROMO_PRICE_TABLE[sanPham]) return PROMO_PRICE_TABLE[sanPham];
+  return PRICE_TABLE[sanPham];
+}
+
 function calculateTotal(unitPrice, qty) {
   return unitPrice * qty;
 }
@@ -342,9 +385,83 @@ function applyTranslations(lang) {
 
   document.documentElement.lang = lang;
   currentLang = lang;
+
+  // applyTranslations vừa ghi đè mọi [data-i18n] bằng giá khuyến mãi trong
+  // từ điển. Nếu đợt khuyến mãi đã kết thúc thì phải trả giá gốc về ngay —
+  // nếu không, đổi ngôn ngữ sẽ làm giá 99.000đ hiện lại sau khi hết hạn.
+  refreshPromoUI();
+}
+
+/* ---------- ĐỒNG HỒ ĐẾM NGƯỢC KHUYẾN MÃI 2/9 ----------
+   Còn hạn: hiện khối đếm ngược, giữ giá 99.000đ trong từ điển.
+   Hết hạn: ẩn khối, trả nhãn giá bánh lẻ về 159.000đ (gạch ngang 172.000đ).
+
+   Đồng hồ chỉ để hiển thị. Máy khách chỉnh sai giờ cùng lắm là nhìn thấy
+   giá sai — Worker vẫn tính tiền theo giờ máy chủ khi ghi đơn. */
+const PROMO_PRICE_LABELS = {
+  vi: { old: "172.000 đ", value: "159.000 đ / chiếc" },
+  en: { old: "172,000 VND", value: "159,000 VND / cake" },
+};
+
+function refreshPromoUI() {
+  const promoBox = document.getElementById("promoBanner");
+  const stillOn = isPromoActive();
+
+  if (promoBox) promoBox.hidden = !stillOn;
+  if (stillOn) return;
+
+  // Hết hạn -> ghi đè nhãn giá bánh lẻ về giá gốc.
+  const labels = PROMO_PRICE_LABELS[currentLang] || PROMO_PRICE_LABELS.vi;
+  document.querySelectorAll('[data-i18n="order_price_single_old"]').forEach((el) => {
+    el.textContent = labels.old;
+  });
+  document.querySelectorAll('[data-i18n="order_price_single_value"]').forEach((el) => {
+    el.textContent = labels.value;
+  });
+}
+
+function startPromoCountdown() {
+  const box = document.getElementById("promoBanner");
+  if (!box) return;
+
+  const dEl = document.getElementById("promoD");
+  const hEl = document.getElementById("promoH");
+  const mEl = document.getElementById("promoM");
+  const sEl = document.getElementById("promoS");
+  if (!dEl || !hEl || !mEl || !sEl) return;
+
+  const pad = (n) => String(n).padStart(2, "0");
+
+  // Khai báo bằng let và gán null trước: tick() được gọi 1 lần NGAY dưới đây,
+  // trước khi setInterval kịp trả về. Nếu dùng const thì lần gọi đầu tiên mà
+  // rơi vào nhánh hết hạn sẽ đụng biến chưa khởi tạo và văng lỗi.
+  let timer = null;
+
+  function tick() {
+    const left = PROMO_END_AT - Date.now();
+
+    if (left <= 0) {
+      refreshPromoUI();
+      if (timer) clearInterval(timer);
+      return;
+    }
+
+    const totalSeconds = Math.floor(left / 1000);
+    dEl.textContent = String(Math.floor(totalSeconds / 86400));
+    hEl.textContent = pad(Math.floor(totalSeconds / 3600) % 24);
+    mEl.textContent = pad(Math.floor(totalSeconds / 60) % 60);
+    sEl.textContent = pad(totalSeconds % 60);
+  }
+
+  tick();
+  if (isPromoActive()) timer = setInterval(tick, 1000);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+
+  /* ---------- 0. KHUYẾN MÃI 2/9: đồng hồ đếm ngược ---------- */
+  refreshPromoUI();
+  startPromoCountdown();
 
   /* ---------- 1. HEADER: đổi trạng thái khi cuộn trang ---------- */
   const header = document.getElementById("header");
@@ -545,7 +662,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updateModalQuantityAndTotal() {
     const qty = Math.max(1, parseInt(modalQtyInput.value, 10) || 0);
-    const unitPrice = PRICE_TABLE[orderModalSelect.value] || 0;
+    const unitPrice = getUnitPrice(orderModalSelect.value) || 0;
     if (modalTotalAmount) modalTotalAmount.textContent = formatVnd(calculateTotal(unitPrice, qty));
 
     if (flavorWarning && isBanhLeSelected()) {
@@ -813,7 +930,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // index.html) rồi ghi đúng tên file KÈM ĐUÔI ở đây. Để trống thì chỉ hiện
   // nút bấm, không hiện ảnh QR. Nếu tên file sai/ảnh không tải được thì ảnh
   // tự ẩn (xem onerror bên dưới), nút tham gia nhóm vẫn hoạt động bình thường.
-  const ZALO_QR_IMAGE = "91f58598-825c-4889-831c-c6bfd70167ed.jpg";
+  // Tên file có dấu và khoảng trắng ("Nhóm zalo affiliate.jpg") nên phải ghi
+  // ở dạng đã mã hoá — giống cách index.html trỏ tới "Bục và bánh.png".
+  const ZALO_QR_IMAGE = "Nh%C3%B3m%20zalo%20affiliate.jpg";
 
   const affiliateRegisterForm = document.getElementById("affiliateRegisterForm");
   const affiliateFormFields = document.getElementById("affiliateFormFields");
@@ -919,8 +1038,11 @@ document.addEventListener("DOMContentLoaded", () => {
           affiliateResultCode.textContent = data.affiliateCode;
           affiliateResultLink.textContent = data.affiliateLink;
           affiliateResultLink.setAttribute("href", data.affiliateLink);
+          // Dùng link tra cứu riêng do Worker trả về (kèm token). KHÔNG ghép
+          // link từ Mã Affiliate: mã nằm công khai trong link giới thiệu nên
+          // không dùng làm khoá vào trang số liệu được.
           var lookupLink = document.getElementById("affiliateLookupLink");
-          if (lookupLink) lookupLink.setAttribute("href", "/tra-cuu?q=" + encodeURIComponent(data.affiliateCode));
+          if (lookupLink) lookupLink.setAttribute("href", data.affiliateLookupLink || "/tra-cuu");
           affiliateResult.hidden = false;
         } else {
           affiliateSuccessText.textContent = lang === "en"
