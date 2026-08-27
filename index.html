@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=The+Nautigal:wght@400;700&family=Quicksand:wght@400;500;600;700&family=Tai+Heritage+Pro:wght@400;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/style.css?v=20260813f">
+<link rel="stylesheet" href="css/style.css?v=20260826a">
 </head>
 <body>
 
@@ -298,13 +298,38 @@
               <li>
                 <span data-i18n="order_price_single_label">Bánh lẻ</span>
                 <span class="order-card__price-group">
-                  <s class="order-card__price-old" data-i18n="order_price_single_old">172.000 đ</s>
-                  <strong data-i18n="order_price_single_value">159.000 đ / chiếc</strong>
+                  <s class="order-card__price-old" data-i18n="order_price_single_old">159.000 đ</s>
+                  <strong data-i18n="order_price_single_value">99.000 đ / chiếc</strong>
                 </span>
               </li>
             </ul>
 
+            <!-- Khuyến mãi 2/9: JS tự ẩn khối này và trả giá bánh lẻ về
+                 159.000đ khi qua nửa đêm 02/09 (xem refreshPromoUI trong
+                 js/script.js). Để hidden sẵn để tránh nháy khối khi trang
+                 vừa tải mà khuyến mãi đã hết hạn. -->
+            <div class="promo" id="promoBanner" hidden>
+              <div class="promo__head">
+                <span class="promo__tag" data-i18n="promo_tag">Ưu đãi 2/9</span>
+                <strong class="promo__title" data-i18n="promo_title">Ưu đãi mừng Quốc khánh 2/9</strong>
+              </div>
+              <p class="promo__desc" data-i18n="promo_desc">Bánh lẻ chỉ còn 99.000 đ / chiếc — áp dụng tới hết ngày 02/09.</p>
+              <div class="promo__clock">
+                <span class="promo__ends" data-i18n="promo_ends">Kết thúc sau</span>
+                <div class="promo__units" role="timer" aria-live="off">
+                  <span class="promo__unit"><b id="promoD">0</b><span data-i18n="promo_d">Ngày</span></span>
+                  <span class="promo__sep" aria-hidden="true">:</span>
+                  <span class="promo__unit"><b id="promoH">00</b><span data-i18n="promo_h">Giờ</span></span>
+                  <span class="promo__sep" aria-hidden="true">:</span>
+                  <span class="promo__unit"><b id="promoM">00</b><span data-i18n="promo_m">Phút</span></span>
+                  <span class="promo__sep" aria-hidden="true">:</span>
+                  <span class="promo__unit"><b id="promoS">00</b><span data-i18n="promo_s">Giây</span></span>
+                </div>
+              </div>
+            </div>
+
             <p class="order-card__price-badge" data-i18n="order_price_badge">🎁 Mức giá ưu đãi độc quyền đặt hàng trực tuyến trên website (Đã bao gồm VAT)</p>
+            <p class="order-card__ship-note" data-i18n="order_shipping_note">🚚 Giá trên chưa gồm phí vận chuyển. Nương Bắc sẽ tra cước sau khi đóng gói và báo cho bạn qua email, phí này thanh toán khi nhận hàng.</p>
 
             <div class="order-card__actions">
               <button type="submit" id="btnOrderBox4" class="btn btn--on-dark" data-i18n="order_btn_box4">Đặt hộp quà</button>
@@ -552,6 +577,7 @@
           </div>
 
           <p class="order-modal__note" data-i18n="modal_delivery_note">Giao nội thành Hà Nội trong 1-2 ngày.</p>
+          <p class="order-modal__note order-modal__note--ship" data-i18n="order_shipping_note">🚚 Giá trên chưa gồm phí vận chuyển. Nương Bắc sẽ tra cước sau khi đóng gói và báo cho bạn qua email, phí này thanh toán khi nhận hàng.</p>
           <button type="submit" class="btn btn--on-dark order-modal__submit" data-i18n="modal_submit">Xác nhận đặt hàng</button>
         </div>
 
@@ -692,6 +718,6 @@
   </button>
 </div>
 
-<script src="js/script.js?v=20260813f"></script>
+<script src="js/script.js?v=20260826a"></script>
 </body>
 </html>
