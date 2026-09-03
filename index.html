@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=The+Nautigal:wght@400;700&family=Quicksand:wght@400;500;600;700&family=Tai+Heritage+Pro:wght@400;700&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="css/style.css?v=20260827b">
+<link rel="stylesheet" href="css/style.css?v=20260828a">
 </head>
 <body>
 
@@ -294,8 +294,8 @@
               <li>
                 <span data-i18n="order_price_tinhhoa_label">Hộp Vị Di Sản - Tinh Hoa</span>
                 <span class="order-card__price-group">
-                  <s class="order-card__price-old" data-i18n="order_price_tinhhoa_old">863.000 đ</s>
-                  <strong data-i18n="order_price_tinhhoa_value">799.000 đ / hộp</strong>
+                  <s class="order-card__price-old" data-i18n="order_price_tinhhoa_old">799.000 đ</s>
+                  <strong data-i18n="order_price_tinhhoa_value">699.000 đ / hộp</strong>
                 </span>
               </li>
               <li>
@@ -314,16 +314,17 @@
               </li>
             </ul>
 
-            <!-- Khuyến mãi 2/9: JS tự ẩn khối này và trả giá bánh lẻ về
-                 159.000đ khi qua nửa đêm 02/09 (xem refreshPromoUI trong
-                 js/script.js). Để hidden sẵn để tránh nháy khối khi trang
-                 vừa tải mà khuyến mãi đã hết hạn. -->
+            <!-- Khuyến mãi đặt sớm (Hộp Tinh Hoa + Bánh lẻ): JS tự ẩn khối
+                 này và trả giá cả 2 sản phẩm về giá gốc khi qua nửa đêm
+                 15/09 (xem refreshPromoUI trong js/script.js). Để hidden
+                 sẵn để tránh nháy khối khi trang vừa tải mà khuyến mãi đã
+                 hết hạn. -->
             <div class="promo" id="promoBanner" hidden>
               <div class="promo__head">
-                <span class="promo__tag" data-i18n="promo_tag">Ưu đãi 2/9</span>
-                <strong class="promo__title" data-i18n="promo_title">Ưu đãi mừng Quốc khánh 2/9</strong>
+                <span class="promo__tag" data-i18n="promo_tag">Đặt sớm</span>
+                <strong class="promo__title" data-i18n="promo_title">Ưu đãi đặt hàng sớm</strong>
               </div>
-              <p class="promo__desc" data-i18n="promo_desc">Bánh lẻ chỉ còn 99.000 đ / chiếc — áp dụng tới hết ngày 02/09.</p>
+              <p class="promo__desc" data-i18n="promo_desc">Hộp Vị Di Sản - Tinh Hoa còn 699.000 đ / hộp và Bánh lẻ còn 99.000 đ / chiếc — áp dụng cho đơn đặt trước ngày 15/09.</p>
               <div class="promo__clock">
                 <span class="promo__ends" data-i18n="promo_ends">Kết thúc sau</span>
                 <div class="promo__units" role="timer" aria-live="off">
@@ -575,6 +576,11 @@
             <p class="flavor-warning" id="flavorWarning" hidden></p>
           </div>
 
+          <div class="order-modal__field">
+            <label for="modalMaGiamGia" data-i18n="label_discount_code">Mã giảm giá (nếu có)</label>
+            <input type="text" id="modalMaGiamGia" name="maGiamGia" placeholder="Nhập mã nếu bạn có" data-i18n-placeholder="placeholder_discount_code" maxlength="40" autocomplete="off">
+          </div>
+
           <div class="order-modal__total">
             <span data-i18n="label_total">Tổng tiền</span>
             <strong id="modalTotalAmount">0 đ</strong>
@@ -705,6 +711,19 @@
 
 <button class="scroll-top" id="scrollTop" aria-label="Lên đầu trang">↑</button>
 
+<!-- Nút bật/tắt âm thanh chào mừng (giọng nói + nhạc nền). Trình duyệt chặn
+     tự phát âm thanh có tiếng khi khách vừa vào trang, nên đây là nút khách
+     tự bấm để nghe, không tự động phát. -->
+<div class="sound-toggle">
+  <span class="sound-toggle__hint" id="soundToggleHint" data-i18n="sound_toggle_hint">Bấm để nghe lời chào 🔊</span>
+  <button type="button" class="sound-toggle__btn" id="soundToggleBtn" data-i18n-aria-label="sound_toggle_off" aria-label="Bật âm thanh chào mừng" aria-pressed="false">
+    <span class="sound-toggle__icon-off">🔈</span>
+    <span class="sound-toggle__icon-on">🔊</span>
+  </button>
+</div>
+<audio id="welcomeVoice" src="audio/welcome-voice.mp3" preload="none"></audio>
+<audio id="backgroundMusic" src="audio/background-music.mp3" preload="none"></audio>
+
 <!-- Chatbot trợ lý -->
 <div class="chatbot" id="chatbot">
   <div class="chatbot__panel" id="chatbotPanel" hidden>
@@ -728,6 +747,6 @@
   </button>
 </div>
 
-<script src="js/script.js?v=20260826b"></script>
+<script src="js/script.js?v=20260903b"></script>
 </body>
 </html>
