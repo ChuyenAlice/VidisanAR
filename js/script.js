@@ -60,8 +60,8 @@ const translations = {
     order_retail_heading: "Hộp 4 chiếc \"Hà Nội Trong Tôi\"",
     order_retail_desc: "Bốn chiếc bánh trung thu nghệ thuật, tạo hình thủ công tại Hà Nội, đặt trong hộp gỗ sơn mài kèm thiệp giấy dó và bộ đế kể chuyện song ngữ Việt - Anh.",
     order_price_tinhhoa_label: "Hộp Vị Di Sản - Tinh Hoa",
-    order_price_tinhhoa_old: "863.000 đ",
-    order_price_tinhhoa_value: "799.000 đ / hộp",
+    order_price_tinhhoa_old: "799.000 đ",
+    order_price_tinhhoa_value: "699.000 đ / hộp",
     order_price_tuyenchon_label: "Hộp Vị Di Sản - Tuyển Chọn",
     order_price_tuyenchon_old: "1.079.000 đ",
     order_price_tuyenchon_value: "999.000 đ / hộp",
@@ -70,9 +70,9 @@ const translations = {
     order_price_single_value: "99.000 đ / chiếc",
     order_price_badge: "🎁 Mức giá ưu đãi độc quyền đặt hàng trực tuyến trên website (Đã bao gồm VAT)",
     order_shipping_note: "🚚 Giá trên chưa gồm phí vận chuyển. Nương Bắc sẽ tra cước sau khi đóng gói và báo cho bạn qua email, phí này thanh toán khi nhận hàng.",
-    promo_title: "Ưu đãi mừng Quốc khánh 2/9",
-    promo_desc: "Bánh lẻ chỉ còn 99.000 đ / chiếc — áp dụng tới hết ngày 02/09.",
-    promo_tag: "Ưu đãi 2/9",
+    promo_title: "Ưu đãi đặt hàng sớm",
+    promo_desc: "Hộp Vị Di Sản - Tinh Hoa còn 699.000 đ / hộp và Bánh lẻ còn 99.000 đ / chiếc — áp dụng cho đơn đặt trước ngày 15/09.",
+    promo_tag: "Đặt sớm",
     promo_ends: "Kết thúc sau",
     promo_d: "Ngày",
     promo_h: "Giờ",
@@ -132,6 +132,8 @@ const translations = {
     placeholder_address: "Nhập địa chỉ giao hàng",
     label_product: "Sản phẩm",
     label_flavors: "Chọn vị bánh yêu thích — Số lượng ở trên sẽ tự cộng theo đây",
+    label_discount_code: "Mã giảm giá (nếu có)",
+    placeholder_discount_code: "Nhập mã nếu bạn có",
     label_notes: "Ghi chú",
     placeholder_notes: "Ghi chú thêm (nếu có)",
     modal_delivery_note: "Giao nội thành Hà Nội trong 1-2 ngày.",
@@ -225,8 +227,8 @@ const translations = {
     order_retail_heading: "Set of 4 \"Hanoi In My Heart\" Cakes",
     order_retail_desc: "Four artisan mooncakes handcrafted in Hanoi, presented in a lacquered wooden box with a dó-paper card and a bilingual Vietnamese-English storytelling stand.",
     order_price_tinhhoa_label: "Vị Di Sản Box - Tinh Hoa",
-    order_price_tinhhoa_old: "863,000 VND",
-    order_price_tinhhoa_value: "799,000 VND / box",
+    order_price_tinhhoa_old: "799,000 VND",
+    order_price_tinhhoa_value: "699,000 VND / box",
     order_price_tuyenchon_label: "Vị Di Sản Box - Tuyển Chọn",
     order_price_tuyenchon_old: "1,079,000 VND",
     order_price_tuyenchon_value: "999,000 VND / box",
@@ -235,9 +237,9 @@ const translations = {
     order_price_single_value: "99,000 VND / cake",
     order_price_badge: "🎁 Exclusive online pricing — website orders only (VAT included)",
     order_shipping_note: "🚚 Prices exclude shipping. We will calculate the fee once your order is packed, email it to you, and collect it on delivery.",
-    promo_title: "National Day offer",
-    promo_desc: "Single cakes are 99,000 VND each — until end of 2 September.",
-    promo_tag: "2/9 offer",
+    promo_title: "Early-order offer",
+    promo_desc: "The Vị Di Sản Tinh Hoa box is now 699,000 VND and single cakes are 99,000 VND — for orders placed before 15 September.",
+    promo_tag: "Early bird",
     promo_ends: "Ends in",
     promo_d: "Days",
     promo_h: "Hrs",
@@ -297,6 +299,8 @@ const translations = {
     placeholder_address: "Enter your delivery address",
     label_product: "Product",
     label_flavors: "Choose your favorite flavors — Quantity above updates automatically",
+    label_discount_code: "Discount code (if any)",
+    placeholder_discount_code: "Enter a code if you have one",
     label_notes: "Notes",
     placeholder_notes: "Any additional notes",
     modal_delivery_note: "Delivered within Hanoi city in 1-2 days.",
@@ -348,9 +352,11 @@ const PRICE_TABLE = {
   "Bánh lẻ": 159000,
 };
 
-/* ---------- KHUYẾN MÃI TRƯỚC LỄ 2/9 ----------
-   Bánh lẻ còn 99.000đ tới hết ngày 02/09, sau đó tự về 159.000đ. Hết hạn
-   là trang tự đổi lại giá và ẩn đồng hồ, không ai phải vào sửa tay.
+/* ---------- KHUYẾN MÃI ĐẶT SỚM (tới hết 15/09) ----------
+   - Hộp Vị Di Sản - Tinh Hoa: còn 699.000đ.
+   - Bánh lẻ: còn 99.000đ (hồi sinh đúng giá đợt 2/9 cũ, đổi mốc kết thúc
+     sang 15/09).
+   Hết hạn là trang tự đổi lại giá và ẩn đồng hồ, không ai phải vào sửa tay.
 
    Mốc thời gian ghi kèm múi giờ +07:00 để máy khách đặt lệch múi giờ vẫn
    đếm về đúng nửa đêm giờ Việt Nam.
@@ -358,18 +364,32 @@ const PRICE_TABLE = {
    Bảng này CHỈ để hiển thị. Số tiền thật của đơn hàng do Worker tính lại
    từ tên sản phẩm + số lượng (xem getUnitPrice trong worker.js), nên máy
    khách chỉnh đồng hồ hay sửa giá trong trình duyệt đều không ăn thua.
-   Đổi đợt khuyến mãi thì sửa cả 2 hằng số cùng tên bên worker.js. */
-const PROMO_END_AT = Date.parse("2026-09-02T23:59:59+07:00");
+   Đổi đợt khuyến mãi thì sửa cả các hằng số cùng tên bên worker.js. */
+const PROMO_END_AT = Date.parse("2026-09-15T23:59:59+07:00");
 const PROMO_PRICE_TABLE = {
+  "Hộp Vị Di Sản - Tinh Hoa": 699000,
   "Bánh lẻ": 99000,
+};
+
+// Mã giảm giá riêng cho khách cũ — CHỈ để tính trước tổng tiền cho khách
+// xem ngay trong popup, số tiền THẬT vẫn do Worker tính lại (xem
+// DISCOUNT_CODES trong worker.js, phải sửa khớp cả 2 nơi khi đổi mã/giá).
+// Mã này KHÔNG hiển thị công khai ở đâu trên trang — chỉ ai được sale gửi
+// riêng mới biết để nhập vào ô "Mã giảm giá".
+const DISCOUNT_CODES = {
+  khachcunuongbac: { "Hộp Vị Di Sản - Tinh Hoa": 639000 },
 };
 
 function isPromoActive(now) {
   return (now === undefined ? Date.now() : now) <= PROMO_END_AT;
 }
 
-function getUnitPrice(sanPham) {
-  if (isPromoActive() && PROMO_PRICE_TABLE[sanPham]) return PROMO_PRICE_TABLE[sanPham];
+function getUnitPrice(sanPham, discountCode) {
+  if (isPromoActive()) {
+    const codeTable = DISCOUNT_CODES[String(discountCode || "").trim().toLowerCase()];
+    if (codeTable && codeTable[sanPham]) return codeTable[sanPham];
+    if (PROMO_PRICE_TABLE[sanPham]) return PROMO_PRICE_TABLE[sanPham];
+  }
   return PRICE_TABLE[sanPham];
 }
 
@@ -405,15 +425,25 @@ function applyTranslations(lang) {
   refreshPromoUI();
 }
 
-/* ---------- ĐỒNG HỒ ĐẾM NGƯỢC KHUYẾN MÃI 2/9 ----------
-   Còn hạn: hiện khối đếm ngược, giữ giá 99.000đ trong từ điển.
-   Hết hạn: ẩn khối, trả nhãn giá bánh lẻ về 159.000đ (gạch ngang 172.000đ).
+/* ---------- ĐỒNG HỒ ĐẾM NGƯỢC KHUYẾN MÃI ĐẶT SỚM ----------
+   Còn hạn: hiện khối đếm ngược, giữ giá khuyến mãi (699.000đ / 99.000đ)
+   baked sẵn trong translations vì trang được cập nhật NGAY TRONG lúc
+   khuyến mãi đang chạy.
+   Hết hạn: ẩn khối, trả nhãn giá của CẢ HAI sản phẩm về giá gốc trước đợt
+   khuyến mãi này (Tinh Hoa: 799.000đ, gạch ngang 863.000đ — Bánh lẻ:
+   159.000đ, gạch ngang 172.000đ).
 
    Đồng hồ chỉ để hiển thị. Máy khách chỉnh sai giờ cùng lắm là nhìn thấy
    giá sai — Worker vẫn tính tiền theo giờ máy chủ khi ghi đơn. */
 const PROMO_PRICE_LABELS = {
-  vi: { old: "172.000 đ", value: "159.000 đ / chiếc" },
-  en: { old: "172,000 VND", value: "159,000 VND / cake" },
+  vi: {
+    tinhhoa: { old: "863.000 đ", value: "799.000 đ / hộp" },
+    single: { old: "172.000 đ", value: "159.000 đ / chiếc" },
+  },
+  en: {
+    tinhhoa: { old: "863,000 VND", value: "799,000 VND / box" },
+    single: { old: "172,000 VND", value: "159,000 VND / cake" },
+  },
 };
 
 function refreshPromoUI() {
@@ -423,13 +453,15 @@ function refreshPromoUI() {
   if (promoBox) promoBox.hidden = !stillOn;
   if (stillOn) return;
 
-  // Hết hạn -> ghi đè nhãn giá bánh lẻ về giá gốc.
+  // Hết hạn -> ghi đè nhãn giá của cả 2 sản phẩm về giá gốc.
   const labels = PROMO_PRICE_LABELS[currentLang] || PROMO_PRICE_LABELS.vi;
-  document.querySelectorAll('[data-i18n="order_price_single_old"]').forEach((el) => {
-    el.textContent = labels.old;
-  });
-  document.querySelectorAll('[data-i18n="order_price_single_value"]').forEach((el) => {
-    el.textContent = labels.value;
+  ["tinhhoa", "single"].forEach((key) => {
+    document.querySelectorAll(`[data-i18n="order_price_${key}_old"]`).forEach((el) => {
+      el.textContent = labels[key].old;
+    });
+    document.querySelectorAll(`[data-i18n="order_price_${key}_value"]`).forEach((el) => {
+      el.textContent = labels[key].value;
+    });
   });
 }
 
@@ -472,7 +504,7 @@ function startPromoCountdown() {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ---------- 0. KHUYẾN MÃI 2/9: đồng hồ đếm ngược ---------- */
+  /* ---------- 0. KHUYẾN MÃI ĐẶT SỚM: đồng hồ đếm ngược ---------- */
   refreshPromoUI();
   startPromoCountdown();
 
@@ -651,6 +683,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const flavorWarning = document.getElementById("flavorWarning");
   const modalTotalAmount = document.getElementById("modalTotalAmount");
   const modalFlavorsSection = document.getElementById("modalFlavorsSection");
+  const modalDiscountCodeInput = document.getElementById("modalMaGiamGia");
 
   // Hộp nguyên bản (Tinh Hoa / Tuyển Chọn) đã có sẵn bộ vị tiêu chuẩn —
   // chỉ "Bánh lẻ" mới cho khách tự phân bổ số lượng theo từng vị.
@@ -706,7 +739,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateModalQuantityAndTotal() {
     if (isBanhLeSelected()) updateFlavorTotal();
     const qty = Math.max(1, parseInt(modalQtyInput.value, 10) || 0);
-    const unitPrice = getUnitPrice(orderModalSelect.value) || 0;
+    const discountCode = modalDiscountCodeInput ? modalDiscountCodeInput.value : "";
+    const unitPrice = getUnitPrice(orderModalSelect.value, discountCode) || 0;
     if (modalTotalAmount) modalTotalAmount.textContent = formatVnd(calculateTotal(unitPrice, qty));
   }
 
@@ -726,6 +760,11 @@ document.addEventListener("DOMContentLoaded", () => {
         updateFlavorSectionVisibility();
         updateModalQuantityAndTotal();
       });
+    }
+    // Giá tự cập nhật ngay khi khách gõ/xoá mã giảm giá, không cần bấm gì
+    // thêm — khớp đúng số tiền mà Worker sẽ tính lại lúc gửi đơn thật.
+    if (modalDiscountCodeInput) {
+      modalDiscountCodeInput.addEventListener("input", updateModalQuantityAndTotal);
     }
     updateFlavorSectionVisibility();
     updateModalQuantityAndTotal();
@@ -977,6 +1016,7 @@ document.addEventListener("DOMContentLoaded", () => {
         sanPham: orderModalSelect.value,
         soLuong: modalQtyInput.value,
         ...collectFlavorQuantities(),
+        maGiamGia: orderModalFormEl.maGiamGia.value.trim(),
         ghiChu: orderModalFormEl.ghiChu.value.trim(),
         affiliateCode: getAffiliateCode(),
         lang: currentLang,
