@@ -131,7 +131,7 @@ const translations = {
     label_address: "Địa chỉ",
     placeholder_address: "Nhập địa chỉ giao hàng",
     label_product: "Sản phẩm",
-    label_flavors: "Chọn vị bánh yêu thích",
+    label_flavors: "Chọn vị bánh yêu thích — Số lượng ở trên sẽ tự cộng theo đây",
     label_notes: "Ghi chú",
     placeholder_notes: "Ghi chú thêm (nếu có)",
     modal_delivery_note: "Giao nội thành Hà Nội trong 1-2 ngày.",
@@ -163,6 +163,10 @@ const translations = {
     footer_service_item4: "Vận chuyển quốc tế",
 
     footer_contact_title: "Liên hệ",
+
+    sound_toggle_on: "Tắt âm thanh chào mừng",
+    sound_toggle_off: "Bật âm thanh chào mừng",
+    sound_toggle_hint: "Bấm để nghe lời chào 🔊",
   },
 
   en: {
@@ -292,7 +296,7 @@ const translations = {
     label_address: "Address",
     placeholder_address: "Enter your delivery address",
     label_product: "Product",
-    label_flavors: "Choose your favorite flavors",
+    label_flavors: "Choose your favorite flavors — Quantity above updates automatically",
     label_notes: "Notes",
     placeholder_notes: "Any additional notes",
     modal_delivery_note: "Delivered within Hanoi city in 1-2 days.",
@@ -324,6 +328,10 @@ const translations = {
     footer_service_item4: "International Shipping",
 
     footer_contact_title: "Contact",
+
+    sound_toggle_on: "Mute welcome sound",
+    sound_toggle_off: "Play welcome sound",
+    sound_toggle_hint: "Tap to hear our welcome 🔊",
   },
 };
 
@@ -381,6 +389,11 @@ function applyTranslations(lang) {
   document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
     const key = el.dataset.i18nPlaceholder;
     if (dict[key] !== undefined) el.setAttribute("placeholder", dict[key]);
+  });
+
+  document.querySelectorAll("[data-i18n-aria-label]").forEach((el) => {
+    const key = el.dataset.i18nAriaLabel;
+    if (dict[key] !== undefined) el.setAttribute("aria-label", dict[key]);
   });
 
   document.documentElement.lang = lang;
@@ -629,11 +642,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ---------- 9. SỐ LƯỢNG + PHÂN BỔ VỊ BÁNH (Modal) ----------
-     "Số lượng" được gõ tay tự do (để mua nhiều hộp/nhiều bánh cùng lúc) và
-     là số quyết định "Tổng tiền" = Số lượng * đơn giá Sản phẩm đang chọn.
-     4 ô vị bánh bên dưới chỉ là phân bổ THAM KHẢO (không bắt buộc, không
-     drive Số lượng) — nếu tổng phân bổ vượt quá Số lượng thì chỉ cảnh báo,
-     không chặn gửi đơn. */
+     Với "Bánh lẻ": khách chọn số lượng theo từng vị ở 4 ô bên dưới, "Số
+     lượng" tự cộng dồn theo (khoá readonly, không gõ tay được) để không
+     bao giờ lệch giữa số lượng và tiền hiển thị. Với Hộp Tinh Hoa/Tuyển
+     Chọn (không có ô vị): "Số lượng" mở lại cho gõ tay như cũ. */
   const modalQtyInput = document.getElementById("modalSoLuong");
   const flavorQtyInputs = Array.from(document.querySelectorAll("#orderModalForm .flavor-qty__input"));
   const flavorWarning = document.getElementById("flavorWarning");
@@ -650,9 +662,24 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!modalFlavorsSection) return;
     const show = isBanhLeSelected();
     modalFlavorsSection.hidden = !show;
-    if (!show) {
+
+    // "Số lượng" đổi vai trò tuỳ sản phẩm: với Bánh lẻ nó là TỔNG được cộng
+    // từ 4 ô vị bên dưới nên khoá không cho gõ tay (readonly, không phải
+    // disabled — readonly vẫn gửi giá trị lên khi submit form, disabled thì
+    // không); với Hộp Tinh Hoa/Tuyển Chọn thì mở lại cho gõ tay như cũ vì
+    // không có vị để cộng.
+    if (show) {
+      modalQtyInput.readOnly = true;
+      modalQtyInput.classList.add("order-modal__field--locked");
+      updateFlavorTotal();
+    } else {
+      modalQtyInput.readOnly = false;
+      modalQtyInput.classList.remove("order-modal__field--locked");
       flavorQtyInputs.forEach((input) => { input.value = 0; });
       if (flavorWarning) flavorWarning.hidden = true;
+      // Số lượng đang mang số dư từ lần chọn Bánh lẻ trước đó (VD "8") thì
+      // không còn ý nghĩa gì với hộp nguyên bản -> trả về mặc định 1.
+      modalQtyInput.value = 1;
     }
   }
 
@@ -660,19 +687,27 @@ document.addEventListener("DOMContentLoaded", () => {
     return flavorQtyInputs.reduce((sum, input) => sum + (Math.max(0, parseInt(input.value, 10) || 0)), 0);
   }
 
+  // Cộng dồn 4 ô vị rồi ghi thẳng vào "Số lượng" — khách chọn vị xong là
+  // số lượng và tiền tự nhảy theo, không cần tự tính tay hay gõ trùng.
+  function updateFlavorTotal() {
+    if (!isBanhLeSelected()) return;
+    const flavorTotal = getTotalFlavorQty();
+    modalQtyInput.value = flavorTotal;
+
+    // Bắt buộc chọn ít nhất 1 chiếc mới cho gửi đơn — dùng lại đúng ô cảnh
+    // báo sẵn có, đổi công dụng từ "báo lệch số" (không còn xảy ra được vì
+    // đã khoá gõ tay) sang "nhắc chưa chọn vị nào".
+    if (flavorWarning) {
+      flavorWarning.hidden = flavorTotal > 0;
+      if (flavorTotal === 0) flavorWarning.textContent = "Vui lòng chọn ít nhất 1 chiếc theo vị bên dưới.";
+    }
+  }
+
   function updateModalQuantityAndTotal() {
+    if (isBanhLeSelected()) updateFlavorTotal();
     const qty = Math.max(1, parseInt(modalQtyInput.value, 10) || 0);
     const unitPrice = getUnitPrice(orderModalSelect.value) || 0;
     if (modalTotalAmount) modalTotalAmount.textContent = formatVnd(calculateTotal(unitPrice, qty));
-
-    if (flavorWarning && isBanhLeSelected()) {
-      const flavorTotal = getTotalFlavorQty();
-      const overLimit = flavorTotal > qty;
-      flavorWarning.hidden = !overLimit;
-      if (overLimit) {
-        flavorWarning.textContent = `Tổng số lượng theo vị (${flavorTotal}) đang vượt quá Số lượng (${qty}) bạn đã nhập.`;
-      }
-    }
   }
 
   if (modalQtyInput) {
@@ -1249,6 +1284,47 @@ document.addEventListener("DOMContentLoaded", () => {
         chatbotInput.focus();
       }
     });
+  }
+
+  /* ---------- ÂM THANH CHÀO MỪNG (giọng nói + nhạc nền) ----------
+     Trình duyệt chặn tự phát âm thanh có tiếng khi khách vừa vào trang —
+     chỉ phát được sau khi khách đã tương tác (bấm nút này). Vì vậy đây là
+     một nút loa nổi, khách tự bấm để nghe, không có kiểu "tự động bật". */
+  const soundToggleBtn = document.getElementById("soundToggleBtn");
+  const soundToggleHint = document.getElementById("soundToggleHint");
+  const welcomeVoice = document.getElementById("welcomeVoice");
+  const backgroundMusic = document.getElementById("backgroundMusic");
+
+  if (soundToggleBtn && welcomeVoice && backgroundMusic) {
+    let soundOn = false;
+    backgroundMusic.volume = 0.25;
+    backgroundMusic.loop = true;
+
+    function updateSoundToggleLabel() {
+      const key = soundOn ? "sound_toggle_on" : "sound_toggle_off";
+      const label = (translations[currentLang] && translations[currentLang][key]) || "";
+      soundToggleBtn.setAttribute("aria-label", label);
+      soundToggleBtn.setAttribute("aria-pressed", String(soundOn));
+    }
+
+    soundToggleBtn.addEventListener("click", () => {
+      soundOn = !soundOn;
+      soundToggleBtn.classList.toggle("is-on", soundOn);
+      if (soundToggleHint) soundToggleHint.hidden = soundOn;
+
+      if (soundOn) {
+        welcomeVoice.currentTime = 0;
+        welcomeVoice.play().catch(() => {});
+        backgroundMusic.currentTime = 0;
+        backgroundMusic.play().catch(() => {});
+      } else {
+        welcomeVoice.pause();
+        backgroundMusic.pause();
+      }
+      updateSoundToggleLabel();
+    });
+
+    updateSoundToggleLabel();
   }
 
 });
