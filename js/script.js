@@ -63,15 +63,15 @@ const translations = {
     order_price_tinhhoa_old: "799.000 đ",
     order_price_tinhhoa_value: "699.000 đ / hộp",
     order_price_tuyenchon_label: "Hộp Vị Di Sản - Tuyển Chọn",
-    order_price_tuyenchon_old: "1.079.000 đ",
-    order_price_tuyenchon_value: "999.000 đ / hộp",
+    order_price_tuyenchon_old: "999.000 đ",
+    order_price_tuyenchon_value: "899.000 đ / hộp",
     order_price_single_label: "Bánh lẻ",
     order_price_single_old: "159.000 đ",
     order_price_single_value: "99.000 đ / chiếc",
     order_price_badge: "🎁 Mức giá ưu đãi độc quyền đặt hàng trực tuyến trên website (Đã bao gồm VAT)",
     order_shipping_note: "🚚 Giá trên chưa gồm phí vận chuyển. Nương Bắc sẽ tra cước sau khi đóng gói và báo cho bạn qua email, phí này thanh toán khi nhận hàng.",
     promo_title: "Ưu đãi đặt hàng sớm",
-    promo_desc: "Hộp Vị Di Sản - Tinh Hoa còn 699.000 đ / hộp và Bánh lẻ còn 99.000 đ / chiếc — áp dụng cho đơn đặt trước ngày 15/09.",
+    promo_desc: "Hộp Tinh Hoa còn 699.000 đ, Hộp Tuyển Chọn còn 899.000 đ, Bánh lẻ còn 99.000 đ — áp dụng cho đơn đặt trước ngày 15/09.",
     promo_tag: "Đặt sớm",
     promo_ends: "Kết thúc sau",
     promo_d: "Ngày",
@@ -230,15 +230,15 @@ const translations = {
     order_price_tinhhoa_old: "799,000 VND",
     order_price_tinhhoa_value: "699,000 VND / box",
     order_price_tuyenchon_label: "Vị Di Sản Box - Tuyển Chọn",
-    order_price_tuyenchon_old: "1,079,000 VND",
-    order_price_tuyenchon_value: "999,000 VND / box",
+    order_price_tuyenchon_old: "999,000 VND",
+    order_price_tuyenchon_value: "899,000 VND / box",
     order_price_single_label: "Single Cake",
     order_price_single_old: "159,000 VND",
     order_price_single_value: "99,000 VND / cake",
     order_price_badge: "🎁 Exclusive online pricing — website orders only (VAT included)",
     order_shipping_note: "🚚 Prices exclude shipping. We will calculate the fee once your order is packed, email it to you, and collect it on delivery.",
     promo_title: "Early-order offer",
-    promo_desc: "The Vị Di Sản Tinh Hoa box is now 699,000 VND and single cakes are 99,000 VND — for orders placed before 15 September.",
+    promo_desc: "Tinh Hoa box now 699,000 VND, Tuyển Chọn box now 899,000 VND, single cakes now 99,000 VND — for orders placed before 15 September.",
     promo_tag: "Early bird",
     promo_ends: "Ends in",
     promo_d: "Days",
@@ -354,6 +354,7 @@ const PRICE_TABLE = {
 
 /* ---------- KHUYẾN MÃI ĐẶT SỚM (tới hết 15/09) ----------
    - Hộp Vị Di Sản - Tinh Hoa: còn 699.000đ.
+   - Hộp Vị Di Sản - Tuyển Chọn: còn 899.000đ.
    - Bánh lẻ: còn 99.000đ (hồi sinh đúng giá đợt 2/9 cũ, đổi mốc kết thúc
      sang 15/09).
    Hết hạn là trang tự đổi lại giá và ẩn đồng hồ, không ai phải vào sửa tay.
@@ -368,16 +369,21 @@ const PRICE_TABLE = {
 const PROMO_END_AT = Date.parse("2026-09-15T23:59:59+07:00");
 const PROMO_PRICE_TABLE = {
   "Hộp Vị Di Sản - Tinh Hoa": 699000,
+  "Hộp Vị Di Sản - Tuyển Chọn": 899000,
   "Bánh lẻ": 99000,
 };
 
-// Mã giảm giá riêng cho khách cũ — CHỈ để tính trước tổng tiền cho khách
-// xem ngay trong popup, số tiền THẬT vẫn do Worker tính lại (xem
-// DISCOUNT_CODES trong worker.js, phải sửa khớp cả 2 nơi khi đổi mã/giá).
-// Mã này KHÔNG hiển thị công khai ở đâu trên trang — chỉ ai được sale gửi
-// riêng mới biết để nhập vào ô "Mã giảm giá".
+// Mã giảm giá riêng cho khách cũ (đã từng mua trên Smax, do sale xác
+// minh) — CHỈ để tính trước tổng tiền cho khách xem ngay trong popup, số
+// tiền THẬT vẫn do Worker tính lại (xem DISCOUNT_CODES trong worker.js,
+// phải sửa khớp cả 2 nơi khi đổi mã/giá). Mã này KHÔNG hiển thị công khai
+// ở đâu trên trang — chỉ ai được sale gửi riêng mới biết để nhập vào ô
+// "Mã giảm giá".
 const DISCOUNT_CODES = {
-  khachcunuongbac: { "Hộp Vị Di Sản - Tinh Hoa": 639000 },
+  khachcunuongbac: {
+    "Hộp Vị Di Sản - Tinh Hoa": 639000,
+    "Hộp Vị Di Sản - Tuyển Chọn": 839000,
+  },
 };
 
 function isPromoActive(now) {
@@ -438,10 +444,12 @@ function applyTranslations(lang) {
 const PROMO_PRICE_LABELS = {
   vi: {
     tinhhoa: { old: "863.000 đ", value: "799.000 đ / hộp" },
+    tuyenchon: { old: "1.079.000 đ", value: "999.000 đ / hộp" },
     single: { old: "172.000 đ", value: "159.000 đ / chiếc" },
   },
   en: {
     tinhhoa: { old: "863,000 VND", value: "799,000 VND / box" },
+    tuyenchon: { old: "1,079,000 VND", value: "999,000 VND / box" },
     single: { old: "172,000 VND", value: "159,000 VND / cake" },
   },
 };
@@ -455,7 +463,7 @@ function refreshPromoUI() {
 
   // Hết hạn -> ghi đè nhãn giá của cả 2 sản phẩm về giá gốc.
   const labels = PROMO_PRICE_LABELS[currentLang] || PROMO_PRICE_LABELS.vi;
-  ["tinhhoa", "single"].forEach((key) => {
+  ["tinhhoa", "tuyenchon", "single"].forEach((key) => {
     document.querySelectorAll(`[data-i18n="order_price_${key}_old"]`).forEach((el) => {
       el.textContent = labels[key].old;
     });
