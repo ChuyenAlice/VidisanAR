@@ -1016,7 +1016,12 @@ document.addEventListener("DOMContentLoaded", () => {
         sanPham: orderModalSelect.value,
         soLuong: modalQtyInput.value,
         ...collectFlavorQuantities(),
-        maGiamGia: orderModalFormEl.maGiamGia.value.trim(),
+        // Đọc qua modalDiscountCodeInput (an toàn khi thiếu phần tử) thay vì
+        // orderModalFormEl.maGiamGia trực tiếp — nếu lỡ deploy index.html
+        // chưa có ô này (mismatch giữa 2 file), trước đây dòng này ném lỗi
+        // "Cannot read properties of undefined" ngay khi build payload,
+        // làm cả nút "Xác nhận đặt hàng" im lặng không phản hồi gì.
+        maGiamGia: modalDiscountCodeInput ? modalDiscountCodeInput.value.trim() : "",
         ghiChu: orderModalFormEl.ghiChu.value.trim(),
         affiliateCode: getAffiliateCode(),
         lang: currentLang,
