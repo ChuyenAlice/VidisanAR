@@ -626,12 +626,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const orderModalResult = document.getElementById("orderModalResult");
   const orderModalFormEl = document.getElementById("orderModalForm");
 
-  // preset: "box4" (bấm "Đặt hộp quà") gợi ý sẵn 1 Hộp Tinh Hoa nếu khách
-  // chưa chọn gì; "single" (bấm "Mua Bánh lẻ") không ép gì, để khách tự
-  // chọn vị bên dưới — khách vẫn có thể chọn thêm loại khác trong cùng 1
-  // đơn dù bấm nút nào, vì giờ 3 loại đều chọn được cùng lúc.
+  // preset: "box4" (bấm "Đặt hộp quà") gợi ý sẵn 1 Hộp Tinh Hoa; "single"
+  // (bấm "Mua Bánh lẻ") không ép gì, để khách tự chọn vị bên dưới — khách
+  // vẫn có thể chọn thêm loại khác trong cùng 1 đơn dù bấm nút nào, vì giờ
+  // 3 loại đều chọn được cùng lúc.
   function openOrderModal(preset) {
-    if (preset === "box4" && qtyTinhHoaInput && (parseInt(qtyTinhHoaInput.value, 10) || 0) <= 0) {
+    // LUÔN reset sạch mỗi lần mở popup — nếu không, số lượng/vị bánh còn
+    // sót lại từ lần mở trước (đóng popup mà KHÔNG đặt hàng, form chưa bao
+    // giờ được reset) sẽ âm thầm cộng dồn vào đơn mới lần này, làm tổng
+    // tiền sai lệch mà khách không hề hay biết (đã xảy ra trên thực tế:
+    // mở thử chọn 1 vị, đóng lại không đặt, mở lại chỉ định mua 1 hộp —
+    // vẫn còn dư 1 vị từ lần trước cộng thêm vào tổng tiền).
+    orderModalFormEl.reset();
+    if (preset === "box4" && qtyTinhHoaInput) {
       qtyTinhHoaInput.value = 1;
     }
     orderModalOverlay.classList.add("is-active");
