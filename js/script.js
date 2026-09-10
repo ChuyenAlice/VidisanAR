@@ -131,7 +131,8 @@ const translations = {
     label_address: "Địa chỉ",
     placeholder_address: "Nhập địa chỉ giao hàng",
     label_product: "Sản phẩm",
-    label_flavors: "Chọn vị bánh yêu thích — Số lượng ở trên sẽ tự cộng theo đây",
+    label_choose_products: "Chọn số lượng theo từng loại",
+    label_flavors: "Bánh lẻ — chọn số lượng theo vị (số lượng Bánh lẻ tự cộng theo đây)",
     label_discount_code: "Mã giảm giá (nếu có)",
     placeholder_discount_code: "Nhập mã nếu bạn có",
     label_notes: "Ghi chú",
@@ -298,7 +299,8 @@ const translations = {
     label_address: "Address",
     placeholder_address: "Enter your delivery address",
     label_product: "Product",
-    label_flavors: "Choose your favorite flavors — Quantity above updates automatically",
+    label_choose_products: "Choose quantity for each item",
+    label_flavors: "Single cakes — choose flavors (single cake quantity updates automatically)",
     label_discount_code: "Discount code (if any)",
     placeholder_discount_code: "Enter a code if you have one",
     label_notes: "Notes",
@@ -342,10 +344,10 @@ const translations = {
 let currentLang = "vi";
 
 /* ---------- BẢNG GIÁ SẢN PHẨM (giá niêm yết, ĐÃ GỒM VAT) ----------
-   Khoá phải khớp CHÍNH XÁC với value của các <option> trong #modalSanPham
-   và với PRICE_TABLE trong worker.js — nếu đổi tên sản phẩm, đổi cả 3 chỗ.
-   Giá đã bao gồm VAT nên "Tổng tiền" = Giá x Số lượng, KHÔNG cộng thêm gì
-   nữa (xem calculateTotal). */
+   Khoá phải khớp CHÍNH XÁC với data-product của các ô số lượng trong popup
+   đặt hàng (#qtyTinhHoa, #qtyTuyenChon, giá trị "Bánh lẻ") và với
+   PRICE_TABLE trong worker.js — nếu đổi tên sản phẩm, đổi cả 3 chỗ. Giá đã
+   bao gồm VAT nên "Tổng tiền" = Giá x Số lượng, KHÔNG cộng thêm gì nữa. */
 const PRICE_TABLE = {
   "Hộp Vị Di Sản - Tinh Hoa": 799000,
   "Hộp Vị Di Sản - Tuyển Chọn": 999000,
@@ -397,10 +399,6 @@ function getUnitPrice(sanPham, discountCode) {
     if (PROMO_PRICE_TABLE[sanPham]) return PROMO_PRICE_TABLE[sanPham];
   }
   return PRICE_TABLE[sanPham];
-}
-
-function calculateTotal(unitPrice, qty) {
-  return unitPrice * qty;
 }
 
 function applyTranslations(lang) {
@@ -622,21 +620,23 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ---------- 8. POPUP ĐẶT HÀNG (Modal): mở / đóng ---------- */
   const orderModalOverlay = document.getElementById("orderModalOverlay");
   const orderModalClose = document.getElementById("orderModalClose");
-  const orderModalSelect = document.getElementById("modalSanPham");
   const btnOrderBox4 = document.getElementById("btnOrderBox4");
   const btnOrderSingle = document.getElementById("btnOrderSingle");
   const modalFormFields = document.getElementById("modalFormFields");
   const orderModalResult = document.getElementById("orderModalResult");
   const orderModalFormEl = document.getElementById("orderModalForm");
 
-  function openOrderModal(productIndex) {
-    if (orderModalSelect && typeof productIndex === "number") {
-      orderModalSelect.selectedIndex = productIndex;
+  // preset: "box4" (bấm "Đặt hộp quà") gợi ý sẵn 1 Hộp Tinh Hoa nếu khách
+  // chưa chọn gì; "single" (bấm "Mua Bánh lẻ") không ép gì, để khách tự
+  // chọn vị bên dưới — khách vẫn có thể chọn thêm loại khác trong cùng 1
+  // đơn dù bấm nút nào, vì giờ 3 loại đều chọn được cùng lúc.
+  function openOrderModal(preset) {
+    if (preset === "box4" && qtyTinhHoaInput && (parseInt(qtyTinhHoaInput.value, 10) || 0) <= 0) {
+      qtyTinhHoaInput.value = 1;
     }
     orderModalOverlay.classList.add("is-active");
     orderModalOverlay.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
-    updateFlavorSectionVisibility();
     updateModalQuantityAndTotal();
   }
 
@@ -652,15 +652,14 @@ document.addEventListener("DOMContentLoaded", () => {
         orderModalResult.hidden = true;
         modalFormFields.hidden = false;
         orderModalFormEl.reset();
-        updateFlavorSectionVisibility();
         updateModalQuantityAndTotal();
       }
     }, 350);
   }
 
   if (orderModalOverlay && btnOrderBox4 && btnOrderSingle && orderModalClose) {
-    btnOrderBox4.addEventListener("click", () => openOrderModal(0));
-    btnOrderSingle.addEventListener("click", () => openOrderModal(2));
+    btnOrderBox4.addEventListener("click", () => openOrderModal("box4"));
+    btnOrderSingle.addEventListener("click", () => openOrderModal("single"));
 
     orderModalClose.addEventListener("click", closeOrderModal);
 
@@ -681,81 +680,55 @@ document.addEventListener("DOMContentLoaded", () => {
     orderModalDoneBtn.addEventListener("click", closeOrderModal);
   }
 
-  /* ---------- 9. SỐ LƯỢNG + PHÂN BỔ VỊ BÁNH (Modal) ----------
-     Với "Bánh lẻ": khách chọn số lượng theo từng vị ở 4 ô bên dưới, "Số
-     lượng" tự cộng dồn theo (khoá readonly, không gõ tay được) để không
-     bao giờ lệch giữa số lượng và tiền hiển thị. Với Hộp Tinh Hoa/Tuyển
-     Chọn (không có ô vị): "Số lượng" mở lại cho gõ tay như cũ. */
-  const modalQtyInput = document.getElementById("modalSoLuong");
+  /* ---------- 9. CHỌN SỐ LƯỢNG NHIỀU LOẠI CÙNG LÚC (Modal) ----------
+     Trước đây mỗi đơn chỉ chọn ĐÚNG 1 loại (dropdown Sản phẩm + 1 ô Số
+     lượng). Khách yêu cầu đặt được nhiều loại trong cùng 1 đơn/1 lần
+     thanh toán, nên đổi sang: mỗi loại có 1 ô số lượng riêng (mặc định 0,
+     loại nào không mua thì để 0). "Bánh lẻ" vẫn tính theo tổng 4 ô vị bên
+     dưới như cũ (khoá gõ tay trực tiếp, chỉ tính qua vị). Tổng tiền = cộng
+     dồn (số lượng x đơn giá) của cả 3 loại. */
+  const qtyTinhHoaInput = document.getElementById("qtyTinhHoa");
+  const qtyTuyenChonInput = document.getElementById("qtyTuyenChon");
   const flavorQtyInputs = Array.from(document.querySelectorAll("#orderModalForm .flavor-qty__input"));
-  const flavorWarning = document.getElementById("flavorWarning");
+  const banhLeTotalNote = document.getElementById("banhLeTotalNote");
   const modalTotalAmount = document.getElementById("modalTotalAmount");
-  const modalFlavorsSection = document.getElementById("modalFlavorsSection");
   const modalDiscountCodeInput = document.getElementById("modalMaGiamGia");
-
-  // Hộp nguyên bản (Tinh Hoa / Tuyển Chọn) đã có sẵn bộ vị tiêu chuẩn —
-  // chỉ "Bánh lẻ" mới cho khách tự phân bổ số lượng theo từng vị.
-  function isBanhLeSelected() {
-    return orderModalSelect && orderModalSelect.value === "Bánh lẻ";
-  }
-
-  function updateFlavorSectionVisibility() {
-    if (!modalFlavorsSection) return;
-    const show = isBanhLeSelected();
-    modalFlavorsSection.hidden = !show;
-
-    // "Số lượng" đổi vai trò tuỳ sản phẩm: với Bánh lẻ nó là TỔNG được cộng
-    // từ 4 ô vị bên dưới nên khoá không cho gõ tay (readonly, không phải
-    // disabled — readonly vẫn gửi giá trị lên khi submit form, disabled thì
-    // không); với Hộp Tinh Hoa/Tuyển Chọn thì mở lại cho gõ tay như cũ vì
-    // không có vị để cộng.
-    if (show) {
-      modalQtyInput.readOnly = true;
-      modalQtyInput.classList.add("order-modal__field--locked");
-      updateFlavorTotal();
-    } else {
-      modalQtyInput.readOnly = false;
-      modalQtyInput.classList.remove("order-modal__field--locked");
-      flavorQtyInputs.forEach((input) => { input.value = 0; });
-      if (flavorWarning) flavorWarning.hidden = true;
-      // Số lượng đang mang số dư từ lần chọn Bánh lẻ trước đó (VD "8") thì
-      // không còn ý nghĩa gì với hộp nguyên bản -> trả về mặc định 1.
-      modalQtyInput.value = 1;
-    }
-  }
 
   function getTotalFlavorQty() {
     return flavorQtyInputs.reduce((sum, input) => sum + (Math.max(0, parseInt(input.value, 10) || 0)), 0);
   }
 
-  // Cộng dồn 4 ô vị rồi ghi thẳng vào "Số lượng" — khách chọn vị xong là
-  // số lượng và tiền tự nhảy theo, không cần tự tính tay hay gõ trùng.
-  function updateFlavorTotal() {
-    if (!isBanhLeSelected()) return;
-    const flavorTotal = getTotalFlavorQty();
-    modalQtyInput.value = flavorTotal;
-
-    // Bắt buộc chọn ít nhất 1 chiếc mới cho gửi đơn — dùng lại đúng ô cảnh
-    // báo sẵn có, đổi công dụng từ "báo lệch số" (không còn xảy ra được vì
-    // đã khoá gõ tay) sang "nhắc chưa chọn vị nào".
-    if (flavorWarning) {
-      flavorWarning.hidden = flavorTotal > 0;
-      if (flavorTotal === 0) flavorWarning.textContent = "Vui lòng chọn ít nhất 1 chiếc theo vị bên dưới.";
-    }
+  function getProductQuantities() {
+    return {
+      "Hộp Vị Di Sản - Tinh Hoa": Math.max(0, parseInt(qtyTinhHoaInput ? qtyTinhHoaInput.value : 0, 10) || 0),
+      "Hộp Vị Di Sản - Tuyển Chọn": Math.max(0, parseInt(qtyTuyenChonInput ? qtyTuyenChonInput.value : 0, 10) || 0),
+      "Bánh lẻ": getTotalFlavorQty(),
+    };
   }
 
   function updateModalQuantityAndTotal() {
-    if (isBanhLeSelected()) updateFlavorTotal();
-    const qty = Math.max(1, parseInt(modalQtyInput.value, 10) || 0);
+    const banhLeTotal = getTotalFlavorQty();
+    if (banhLeTotalNote) {
+      banhLeTotalNote.textContent =
+        banhLeTotal > 0
+          ? (currentLang === "en" ? `Single cakes: ${banhLeTotal}` : `Bánh lẻ: ${banhLeTotal} chiếc`)
+          : "";
+    }
     const discountCode = modalDiscountCodeInput ? modalDiscountCodeInput.value : "";
-    const unitPrice = getUnitPrice(orderModalSelect.value, discountCode) || 0;
-    if (modalTotalAmount) modalTotalAmount.textContent = formatVnd(calculateTotal(unitPrice, qty));
+    const quantities = getProductQuantities();
+    const total = Object.entries(quantities).reduce((sum, [sanPham, qty]) => {
+      return sum + qty * (getUnitPrice(sanPham, discountCode) || 0);
+    }, 0);
+    if (modalTotalAmount) modalTotalAmount.textContent = formatVnd(total);
   }
 
-  if (modalQtyInput) {
-    modalQtyInput.addEventListener("input", () => {
-      if (modalQtyInput.value !== "" && parseInt(modalQtyInput.value, 10) < 1) modalQtyInput.value = 1;
-      updateModalQuantityAndTotal();
+  if (qtyTinhHoaInput || qtyTuyenChonInput) {
+    [qtyTinhHoaInput, qtyTuyenChonInput].forEach((input) => {
+      if (!input) return;
+      input.addEventListener("input", () => {
+        if (input.value !== "" && parseInt(input.value, 10) < 0) input.value = 0;
+        updateModalQuantityAndTotal();
+      });
     });
     flavorQtyInputs.forEach((input) => {
       input.addEventListener("input", () => {
@@ -763,18 +736,11 @@ document.addEventListener("DOMContentLoaded", () => {
         updateModalQuantityAndTotal();
       });
     });
-    if (orderModalSelect) {
-      orderModalSelect.addEventListener("change", () => {
-        updateFlavorSectionVisibility();
-        updateModalQuantityAndTotal();
-      });
-    }
     // Giá tự cập nhật ngay khi khách gõ/xoá mã giảm giá, không cần bấm gì
     // thêm — khớp đúng số tiền mà Worker sẽ tính lại lúc gửi đơn thật.
     if (modalDiscountCodeInput) {
       modalDiscountCodeInput.addEventListener("input", updateModalQuantityAndTotal);
     }
-    updateFlavorSectionVisibility();
     updateModalQuantityAndTotal();
   }
 
@@ -1015,14 +981,26 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const submitBtn = orderModalFormEl.querySelector('.order-modal__submit');
 
+      // "items": danh sách từng loại khách chọn (bỏ qua loại số lượng = 0) —
+      // cho phép đặt nhiều loại trong cùng 1 đơn/1 lần thanh toán. "sanPham"/
+      // "soLuong" vẫn gửi kèm dạng tóm tắt để tương thích ngược, phòng khi
+      // lỡ chưa kịp deploy worker.js mới cùng lúc với bản index.html/script.js
+      // này (vẫn tạo được đơn, dù không tính tiền chính xác bằng "items").
+      const productQuantities = getProductQuantities();
+      const items = Object.entries(productQuantities)
+        .filter(([, qty]) => qty > 0)
+        .map(([sanPham, soLuong]) => ({ sanPham, soLuong }));
+      const totalQty = items.reduce((sum, item) => sum + item.soLuong, 0);
+
       const payload = {
         loaiKhachHang: "khach_le",
         hoTen: orderModalFormEl.hoTen.value.trim(),
         soDienThoai: orderModalFormEl.dienThoai.value.trim(),
         email: orderModalFormEl.email.value.trim(),
         diaChi: orderModalFormEl.diaChi.value.trim(),
-        sanPham: orderModalSelect.value,
-        soLuong: modalQtyInput.value,
+        items,
+        sanPham: items.map((item) => `${item.soLuong} x ${item.sanPham}`).join(", "),
+        soLuong: totalQty,
         ...collectFlavorQuantities(),
         // Đọc qua modalDiscountCodeInput (an toàn khi thiếu phần tử) thay vì
         // orderModalFormEl.maGiamGia trực tiếp — nếu lỡ deploy index.html
@@ -1040,8 +1018,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!isValidEmailFormat(payload.email)) { alert(vmsg("email")); orderModalFormEl.email.focus(); return; }
       if (!payload.diaChi) { alert(vmsg("address")); orderModalFormEl.diaChi.focus(); return; }
 
-      if (!payload.soLuong || parseInt(payload.soLuong, 10) < 1) {
-        alert(currentLang === "en" ? "Please enter a valid quantity (minimum 1)." : "Vui lòng nhập Số lượng hợp lệ (tối thiểu 1).");
+      if (items.length === 0 || totalQty < 1) {
+        alert(currentLang === "en" ? "Please choose a quantity for at least one product." : "Vui lòng chọn số lượng cho ít nhất 1 sản phẩm.");
         return;
       }
 
