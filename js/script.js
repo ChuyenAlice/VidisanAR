@@ -696,7 +696,12 @@ document.addEventListener("DOMContentLoaded", () => {
      dồn (số lượng x đơn giá) của cả 3 loại. */
   const qtyTinhHoaInput = document.getElementById("qtyTinhHoa");
   const qtyTuyenChonInput = document.getElementById("qtyTuyenChon");
-  const flavorQtyInputs = Array.from(document.querySelectorAll("#orderModalForm .flavor-qty__input"));
+  // Quét trong ĐÚNG #modalFlavorsSection, không phải cả #orderModalForm —
+  // 2 ô số lượng Hộp Tinh Hoa/Tuyển Chọn cũng dùng chung class
+  // "flavor-qty__input" để tái sử dụng style, nên quét cả form sẽ tính
+  // luôn cả số lượng hộp vào tổng Bánh lẻ (bug thật đã xảy ra: mua 1 hộp
+  // Tinh Hoa lại tự cộng thêm 1 Bánh lẻ vào tổng tiền).
+  const flavorQtyInputs = Array.from(document.querySelectorAll("#modalFlavorsSection .flavor-qty__input"));
   const banhLeTotalNote = document.getElementById("banhLeTotalNote");
   const modalTotalAmount = document.getElementById("modalTotalAmount");
   const modalDiscountCodeInput = document.getElementById("modalMaGiamGia");
